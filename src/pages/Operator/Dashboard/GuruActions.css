@@ -1,0 +1,233 @@
+.ga-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ga-modal {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.ga-confirm {
+  width: min(520px, 96%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), var(--card));
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 20px 60px rgba(2,6,23,0.28);
+  border: 1px solid rgba(15,23,36,0.06);
+}
+
+.ga-modal-header, .ga-confirm-header {
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(15, 23, 36, 0.281);
+}
+.ga-modal-header h2, 
+.ga-confirm-header h3 { 
+    margin: 0; 
+    color: black; 
+    font-size: 20px; 
+}
+.ga-icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #9b0606;
+  padding: 4px;
+}
+
+.ga-icon-btn:hover {
+  color: #4b1e1e;
+}
+
+/* modal body grid */
+.ga-modal-body { 
+    padding: 14px 18px; 
+    overflow: auto; 
+    max-height: 60vh; 
+}
+.ga-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 2fr; 
+    gap: 10px 18px; 
+    align-items: start; 
+}
+.ga-row { 
+    display: contents;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+.ga-label { 
+    color: rgb(78, 78, 78); 
+    font-size: 13px; 
+    padding: 8px 0; 
+    text-align: left;
+}
+.ga-value { 
+    color: rgb(46, 46, 46); 
+    font-weight:500; 
+    padding: 8px 0; 
+    word-break: break-word; 
+    text-align: left;
+}
+
+/* modal footer */
+.ga-modal-footer {
+  display:flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-top: 1px solid rgba(15,23,36,0.03);
+}
+.ga-footer-right { 
+    display:flex; 
+    gap:8px; 
+    align-items:center; 
+}
+.ga-footer-left { 
+    display:flex; 
+    gap:8px; 
+    align-items:center; 
+}
+
+/* confirm body/footer */
+.ga-confirm-body { 
+    padding: 12px 0; 
+    color: var(--text); 
+    text-align: left;
+    margin-left: 20px;
+}
+.ga-confirm-footer { 
+    display:flex; 
+    justify-content:flex-end; 
+    gap:8px; 
+    padding-top: 8px; 
+}
+
+/* actions inline (table row) */
+.actions-inline { 
+    display:flex; 
+    gap:8px; 
+    align-items:center; 
+}
+
+.actions-inline .action-btn {
+  box-shadow: none;
+  border: 1px solid rgba(15,23,36,0.06);
+}
+
+/* small responsive tweaks */
+@media (max-width: 820px) {
+  .ga-grid { 
+    grid-template-columns: 1fr; 
+}
+  .ga-modal { 
+    width: 96%; 
+    max-height: 88vh; 
+}
+}
+
+/* Apply to modal body and activities list used in dashboard */
+.ga-modal-body,
+.activities-list,
+.retirement-table-wrap,
+.table-wrap {
+  scrollbar-width: thin;                 /* Firefox: thinner scrollbar */
+  scrollbar-color: rgba(15,23,36,0.06) rgba(255,255,255,0.00); /* Firefox: thumb, track */
+}
+
+/* WebKit browsers (Chrome, Edge, Safari) */
+.ga-modal-body::-webkit-scrollbar,
+.activities-list::-webkit-scrollbar,
+.retirement-table-wrap::-webkit-scrollbar,
+.table-wrap::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* track (background) */
+.ga-modal-body::-webkit-scrollbar-track,
+.activities-list::-webkit-scrollbar-track,
+.retirement-table-wrap::-webkit-scrollbar-track,
+.table-wrap::-webkit-scrollbar-track {
+  background: transparent;               /* no dark background */
+  border-radius: 10px;
+}
+
+/* thumb (draggable part) */
+.ga-modal-body::-webkit-scrollbar-thumb,
+.activities-list::-webkit-scrollbar-thumb,
+.retirement-table-wrap::-webkit-scrollbar-thumb,
+.table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(15,23,36,0.06);       /* very light thumb */
+  border-radius: 10px;
+  border: 2px solid transparent;         /* padding effect */
+  background-clip: content-box;
+}
+
+/* thumb hover — slight darken but still soft */
+.ga-modal-body::-webkit-scrollbar-thumb:hover,
+.activities-list::-webkit-scrollbar-thumb:hover,
+.retirement-table-wrap::-webkit-scrollbar-thumb:hover,
+.table-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(15,23,36,0.10);
+}
+
+/* remove default scrollbar on macOS overlay scrollbars fallback (optional) */
+@media (hover: hover) and (pointer: fine) {
+  .ga-modal-body,
+  .activities-list,
+  .retirement-table-wrap,
+  .table-wrap {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Tambahkan di GuruActions.css */
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary.loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn-primary.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-right-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
