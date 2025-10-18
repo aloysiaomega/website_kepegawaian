@@ -7,6 +7,7 @@ import Login       from './pages/Operator/Login/Login.jsx'
 // import Kepegawaian from './pages/Kepegawaian/Kepegawaian.jsx'
 
 import Dashboard from './pages/Operator/Dashboard/Dashboard.jsx'
+import DashboardA from './pages/Admin/Dashboard/DashboardA.jsx'
 import DataGuru from './pages/Operator/DataGuru/DataGuru.jsx'
 import EditGuru from './pages/Operator/DataGuru/EditGuru.jsx'
 import ViewGuru from './pages/Operator/DataGuru/ViewGuru.jsx'
@@ -32,6 +33,7 @@ export default function App() {
 
         {/* dashboard pasca-login */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin-cabdin/dashboard" element={<DashboardA />} />
         <Route path="/dataguru" element={<DataGuru />} />
         <Route path="/operator/data-guru/view/:id" element={<ViewGuru />} />
         <Route path="/operator/data-guru/edit/:id" element={<EditGuru />} />
