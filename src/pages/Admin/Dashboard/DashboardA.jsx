@@ -142,13 +142,6 @@ export default function DashboardAdminCabdin() {
         {/* Top Bar */}
         <header className="acd-header">
           <div className="acd-header-left">
-            <button 
-              className="acd-toggle-btn" 
-              onClick={handleToggleSidebar}
-              aria-label="Toggle Sidebar"
-            >
-              <FaBars />
-            </button>
             <div className="acd-title-section">
               <h1>Dashboard Admin</h1>
               <div className="acd-subtitle">Cabang Dinas Pendidikan Wilayah VII</div>

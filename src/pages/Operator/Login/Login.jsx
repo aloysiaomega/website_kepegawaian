@@ -6,58 +6,82 @@ import "./login.css"
 export default function LoginPage() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const [nidn, setNidn] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  // Kredensial mock hanya untuk dua role: operator sekolah dan admin cabdin
+  // Kredensial mock untuk dua role
   const validUsers = [
-    { nidn: "admin", password: "admin123", role: "admin_cabdin" },
-    { nidn: "123456456", password: "op2025", role: "operator_sekolah" }
+    { 
+      username: "admin", 
+      password: "admin123", 
+      role: "admin_cabdin",
+      name: "Admin Cabdin",
+      school: "Cabang Dinas Pendidikan Wilayah VII"
+    },
+    { 
+      username: "operator", 
+      password: "op2025", 
+      role: "operator_sekolah",
+      name: "Operator Sekolah", 
+      school: "SMK N 2 Sukoharjo"
+    }
   ]
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setError("")
 
-    if (!nidn || !password) {
+    if (!username || !password) {
       setError("Username dan Password wajib diisi.")
       return
     }
 
     setLoading(true)
 
+    // Simulasi proses login
     setTimeout(() => {
-      const found = validUsers.find(
-        (u) => u.nidn === nidn.trim() && u.password === password
+      const foundUser = validUsers.find(
+        (user) => user.username === username.trim() && user.password === password
       )
 
-      if (!found) {
+      if (!foundUser) {
         setError("Username atau password salah.")
         setLoading(false)
         return
       }
 
-      // Simpan session sederhana termasuk role
+      // Simpan session user
       try {
-        localStorage.setItem(
-          "sessionUser",
-          JSON.stringify({ nidn: found.nidn, role: found.role })
-        )
-      } catch (err) {}
+        const userSession = {
+          username: foundUser.username,
+          role: foundUser.role,
+          name: foundUser.name,
+          school: foundUser.school,
+          loginTime: new Date().toISOString()
+        }
+        localStorage.setItem("sessionUser", JSON.stringify(userSession))
+        console.log("User logged in:", userSession)
+      } catch (err) {
+        console.error("Error saving session:", err)
+        setError("Gagal menyimpan session.")
+        setLoading(false)
+        return
+      }
 
       setLoading(false)
 
-      // Arahkan berdasarkan role (ubah route bila diperlukan)
-      if (found.role === "admin_cabdin") {
+      // Redirect berdasarkan role
+      if (foundUser.role === "admin_cabdin") {
+        navigate("/admin-cabdin/dashboard", { replace: true })
+      } else if (foundUser.role === "operator_sekolah") {
         navigate("/dashboard", { replace: true })
-      } else if (found.role === "operator_sekolah") {
+      } else {
+        // Fallback
         navigate("/dashboard", { replace: true })
-      // } else {
-      //   navigate("/dashboard", { replace: true })
       }
-    }, 600)
+    }, 800)
   }
 
   return (
@@ -84,14 +108,15 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="nidn">Username</label>
+              <label htmlFor="username">Username</label>
               <input
-                id="nidn"
+                id="username"
                 type="text"
                 placeholder="Masukan Username"
-                value={nidn}
-                onChange={(e) => setNidn(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 autoComplete="username"
+                disabled={loading}
               />
             </div>
 
@@ -105,12 +130,14 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
+                  disabled={loading}
                 />
                 <button
                   type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword((s) => !s)}
                   aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+                  disabled={loading}
                 >
                   {showPassword ? "🙈" : "👁️"}
                 </button>
@@ -119,18 +146,32 @@ export default function LoginPage() {
 
             <div className="form-options">
               <label className="remember">
-                <input type="checkbox" /> Ingatkan saya
+                <input type="checkbox" disabled={loading} /> Ingatkan saya
               </label>
-              {/* <a href="#" className="forgot">Lupa password ?</a> */}
             </div>
 
-            <button type="submit" className="btn-login" disabled={loading}>
-              {loading ? "Memproses..." : "MASUK"}
+            <button 
+              type="submit" 
+              className="btn-login" 
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="loading-spinner"></span>
+                  Memproses...
+                </>
+              ) : (
+                "MASUK"
+              )}
             </button>
           </form>
 
-          {/* <p className="help-text">Butuh bantuan? Hubungi Admin</p>
-          <p>(0271) 651-412</p> */}
+          {/* Info login untuk testing */}
+          {/* <div className="login-hint">
+            <p><strong>Testing Credentials:</strong></p>
+            <p>Admin: username: <code>admin</code>, password: <code>admin123</code></p>
+            <p>Operator: username: <code>operator</code>, password: <code>op2025</code></p>
+          </div> */}
         </div>
       </div>
     </div>

@@ -11,9 +11,9 @@ import {
   FaUsers,
   FaKey,
   FaSignOutAlt,
-  FaBars
+  FaEllipsisV
 } from 'react-icons/fa'
-import './SidebarAdminCabdin.css'
+import './SidebarA.css'
 
 export default function SidebarAdminCabdin({ user, collapsed, onToggle }) {
   const navigate = useNavigate()
@@ -34,9 +34,11 @@ export default function SidebarAdminCabdin({ user, collapsed, onToggle }) {
     <aside className={`sidebar-admin ${collapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-admin-inner">
         <div className="sidebar-admin-top">
-          <button className="collapse-admin-btn" onClick={onToggle} aria-label="Toggle sidebar">
-            <FaBars />
-          </button>
+          <button 
+            className="collapse-admin-btn" 
+            onClick={onToggle} 
+            aria-label="Toggle sidebar"
+          />
 
           <div className="profile-admin">
             <div className="avatar-admin">{profile.initials}</div>

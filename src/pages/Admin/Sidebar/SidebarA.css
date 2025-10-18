@@ -46,11 +46,11 @@
   box-sizing: border-box;
 }
 
-/* collapse button */
+
 .collapse-admin-btn {
   background: transparent;
   border: none;
-  color: white;
+  color: var(--sidebar-admin-text) !important;
   font-size: 18px;
   display: inline-flex;
   align-items: center;
@@ -61,11 +61,28 @@
   height: 40px;
   border-radius: 8px;
   transition: all 0.2s ease;
+  position: relative;
 }
 
+.collapse-admin-btn::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 6px 0 white, 0 -6px 0 white;
+}
+
+/* PERBAIKAN: Tambahkan hover effect yang jelas */
 .collapse-admin-btn:hover {
   background: var(--sidebar-admin-hover);
   transform: scale(1.05);
+}
+
+/* PERBAIKAN: Pastikan ikon SVG mewarisi warna */
+.collapse-admin-btn svg {
+  color: inherit !important;
+  fill: currentColor !important;
 }
 
 /* profile */
@@ -293,6 +310,17 @@
   opacity: 1;
   visibility: visible;
   left: calc(100% + 10px);
+}
+
+/* PERBAIKAN: Tambahkan style untuk memastikan ikon terlihat */
+.sidebar-admin .collapse-admin-btn:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* PERBAIKAN: Pastikan tidak ada konflik CSS global */
+.sidebar-admin * {
+  box-sizing: border-box;
 }
 
 /* responsive: slide-in for very small screens */
