@@ -343,7 +343,7 @@
 
 .acd-performance-table th {
   padding: 16px 20px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 14px;
   color: white;
@@ -534,6 +534,185 @@
   color: var(--acd-primary-light);
 }
 
+/* Aksi Cepat Section */
+.acd-quick-actions {
+  margin: 32px 0 24px 0;
+}
+
+.acd-bottom-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--acd-text-color);
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--acd-border-color);
+}
+
+.acd-quick-actions-grid {
+  display: flex;
+  gap: 16px;
+}
+
+.acd-quick-action-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--acd-card-bg);
+  border-radius: var(--acd-border-radius);
+  box-shadow: var(--acd-shadow);
+  border: 1px solid var(--acd-border-color);
+  transition: var(--acd-transition);
+  cursor: pointer;
+  flex: 1;
+}
+
+.acd-quick-action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--acd-shadow-lg);
+}
+
+.acd-quick-action-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.acd-quick-action-content h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--acd-text-color);
+  margin: 0 0 4px 0;
+}
+
+.acd-quick-action-content p {
+  font-size: 14px;
+  color: var(--acd-text-muted);
+  margin: 0;
+}
+
+/* Statistik Wilayah Section */
+.acd-region-stats {
+  background: var(--acd-card-bg);
+  padding: 24px;
+  border-radius: var(--acd-border-radius);
+  box-shadow: var(--acd-shadow);
+  border: 1px solid var(--acd-border-color);
+}
+
+.acd-stats-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.acd-pie-charts {
+  display: flex;
+  gap: 50px;
+  flex: 1;
+}
+
+.acd-pie-chart-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.acd-pie-chart-group h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--acd-text-color);
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.acd-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.acd-pie-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acd-chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.acd-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acd-legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.acd-legend-item span {
+  font-size: 14px;
+  color: var(--acd-text-color);
+  font-weight: 500;
+}
+
+/* Stats Details */
+.acd-stats-details {
+  flex: 1;
+}
+
+.acd-stats-list {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: var(--acd-border-radius);
+  border: 1px solid var(--acd-border-color);
+}
+
+.acd-stats-list h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--acd-text-color);
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--acd-border-color);
+}
+
+.acd-stats-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.acd-stats-detail-item:last-child {
+  border-bottom: none;
+}
+
+.acd-stats-detail-item span {
+  font-size: 14px;
+  color: var(--acd-text-color);
+}
+
+.acd-stat-percentage {
+  font-weight: 600;
+  color: var(--acd-primary-color) !important;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .acd-main {
@@ -557,6 +736,15 @@
   
   .acd-search-wrapper input {
     min-width: 200px;
+  }
+  
+  .acd-stats-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .acd-pie-charts {
+    gap: 40px;
   }
 }
 
@@ -598,6 +786,20 @@
   .acd-search-wrapper input {
     min-width: 180px;
   }
+  
+  .acd-quick-actions-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .acd-pie-charts {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .acd-stats-content {
+    gap: 24px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -624,6 +826,12 @@
   .acd-search-wrapper input {
     min-width: auto;
     width: 100%;
+  }
+  
+  .acd-quick-action-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
   }
 }
 

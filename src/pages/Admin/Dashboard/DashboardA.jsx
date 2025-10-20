@@ -62,7 +62,7 @@ export default function DashboardAdminCabdin() {
     }
   ];
 
-  // Data sekolah contoh (disederhanakan dari gambar)
+  // Data sekolah contoh
   const sekolahData = [
     {
       id: 1,
@@ -126,6 +126,61 @@ export default function DashboardAdminCabdin() {
     sekolah.alamat.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Data untuk diagram lingkaran
+  const guruData = [
+    { label: 'PNS', value: 62.5, color: '#10b981' },
+    { label: 'P3K', value: 25, color: '#f59e0b' },
+    { label: 'P3K Paruh Waktu', value: 12.5, color: '#ef4444' }
+  ];
+
+  const sekolahJenisData = [
+    { label: 'SMK', value: 62.5, color: '#06b6d4' },
+    { label: 'SMA', value: 25, color: '#3b82f6' },
+    { label: 'SMALB', value: 12.5, color: '#8b5cf6' }
+  ];
+
+  // Fungsi untuk membuat diagram lingkaran
+  const PieChart = ({ data, size = 120 }) => {
+    let accumulated = 0;
+    
+    return (
+      <div className="acd-pie-chart" style={{ width: size, height: size }}>
+        <svg width={size} height={size} viewBox="0 0 120 120">
+          {data.map((item, index) => {
+            const startAngle = accumulated;
+            const endAngle = accumulated + (item.value * 3.6); // Convert percentage to degrees
+            accumulated = endAngle;
+            
+            const startX = 60 + 50 * Math.cos((startAngle * Math.PI) / 180);
+            const startY = 60 + 50 * Math.sin((startAngle * Math.PI) / 180);
+            const endX = 60 + 50 * Math.cos((endAngle * Math.PI) / 180);
+            const endY = 60 + 50 * Math.sin((endAngle * Math.PI) / 180);
+            
+            const largeArcFlag = item.value > 50 ? 1 : 0;
+            
+            const pathData = [
+              `M 60 60`,
+              `L ${startX} ${startY}`,
+              `A 50 50 0 ${largeArcFlag} 1 ${endX} ${endY}`,
+              `Z`
+            ].join(' ');
+            
+            return (
+              <path
+                key={index}
+                d={pathData}
+                fill={item.color}
+                stroke="#fff"
+                strokeWidth="2"
+              />
+            );
+          })}
+          <circle cx="60" cy="60" r="30" fill="white" />
+        </svg>
+      </div>
+    );
+  };
+
   return (
     <div className="acd-app">
       <SidebarAdminCabdin collapsed={collapsed} onToggle={handleToggleSidebar} />
@@ -149,18 +204,6 @@ export default function DashboardAdminCabdin() {
           </div>
 
           <div className="acd-header-actions">
-            <div className="acd-search-wrapper">
-              <input
-                type="text"
-                placeholder="Cari sekolah..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="Cari sekolah"
-              />
-              <button className="acd-search-btn" aria-label="Search">
-                <FaSearch />
-              </button>
-            </div>
             <button className="acd-notification-btn" aria-label="Notifikasi">
               🔔
               <span className="acd-notification-dot" />
@@ -194,6 +237,18 @@ export default function DashboardAdminCabdin() {
             <div className="acd-section-header">
               <h2 className="acd-section-title">Performa Sekolah</h2>
             </div>
+            <div className="acd-search-wrapper">
+              <input
+                type="text"
+                placeholder="Cari sekolah..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Cari sekolah"
+              />
+              <button className="acd-search-btn" aria-label="Search">
+                <FaSearch />
+              </button>
+            </div><br />
 
             <div className="acd-table-container">
               <table className="acd-performance-table">
@@ -205,7 +260,7 @@ export default function DashboardAdminCabdin() {
                     <th>PNS</th>
                     <th>P3K</th>
                     <th>Paruh Waktu</th>
-                    <th>Masa Akan Pensiun</th>
+                    <th>Guru yang Akan Pensiun</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -224,7 +279,7 @@ export default function DashboardAdminCabdin() {
                       <td className="acd-count-cell">{sekolah.p3k}</td>
                       <td className="acd-count-cell">{sekolah.paruhWaktu}</td>
                       <td className="acd-pensiun-cell">
-                        <span className="acd-pensiun-badge">{sekolah.masaPensiun} Tahun</span>
+                        <span className="acd-pensiun-badge">{sekolah.masaPensiun} Orang</span>
                       </td>
                       <td className="acd-actions-cell">
                         <button 
@@ -265,6 +320,110 @@ export default function DashboardAdminCabdin() {
                 <button className="acd-pagination-btn acd-next-btn">
                   Selanjutnya
                 </button>
+              </div>
+            </div>
+
+            {/* Aksi Cepat Section */}
+            <div className="acd-quick-actions">
+              <h3 className="acd-bottom-section-title">Aksi Cepat</h3>
+              <div className="acd-quick-actions-grid">
+                <div className="acd-quick-action-card">
+                  <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+                    <FaClock />
+                  </div>
+                  <div className="acd-quick-action-content">
+                    <h4>Verifikasi Usulan</h4>
+                    <p>Perlu perhatian segera</p>
+                  </div>
+                </div>
+                
+                <div className="acd-quick-action-card">
+                  <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+                    <FaSchool />
+                  </div>
+                  <div className="acd-quick-action-content">
+                    <h4>Data Sekolah</h4>
+                    <p>Kelola Sekolah</p>
+                  </div>
+                </div>
+                
+                <div className="acd-quick-action-card">
+                  <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+                    <FaUsers />
+                  </div>
+                  <div className="acd-quick-action-content">
+                    <h4>Data Guru</h4>
+                    <p>Seluruh Wilayah</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Statistik Wilayah Section */}
+              <h3 className="acd-bottom-section-title">Statistik Wilayah</h3>
+            <div className="acd-region-stats">
+              <div className="acd-stats-content">
+                <div className="acd-pie-charts">
+                  <div className="acd-pie-chart-group">
+                    <h4>Status Guru</h4>
+                    <div className="acd-chart-container">
+                      <PieChart data={guruData} size={140} />
+                      <div className="acd-chart-legend">
+                        {guruData.map((item, index) => (
+                          <div key={index} className="acd-legend-item">
+                            <div className="acd-legend-color" style={{ backgroundColor: item.color }}></div>
+                            <span>{item.label} {item.value}%</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="acd-pie-chart-group">
+                    <h4>Jenjang Sekolah</h4>
+                    <div className="acd-chart-container">
+                      <PieChart data={sekolahJenisData} size={140} />
+                      <div className="acd-chart-legend">
+                        {sekolahJenisData.map((item, index) => (
+                          <div key={index} className="acd-legend-item">
+                            <div className="acd-legend-color" style={{ backgroundColor: item.color }}></div>
+                            <span>{item.label} {item.value}%</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="acd-stats-details">
+                  <div className="acd-stats-list">
+                    <h4>Detail Statistik</h4>
+                    <div className="acd-stats-detail-item">
+                      <span>P3K Paruh Waktu</span>
+                      <span className="acd-stat-percentage">12.5%</span>
+                    </div>
+                    <div className="acd-stats-detail-item">
+                      <span>P3K</span>
+                      <span className="acd-stat-percentage">25%</span>
+                    </div>
+                    <div className="acd-stats-detail-item">
+                      <span>PNS</span>
+                      <span className="acd-stat-percentage">62.5%</span>
+                    </div>
+                    <div className="acd-stats-detail-item">
+                      <span>SMALB</span>
+                      <span className="acd-stat-percentage">12.5%</span>
+                    </div>
+                    <div className="acd-stats-detail-item">
+                      <span>SMA</span>
+                      <span className="acd-stat-percentage">25%</span>
+                    </div>
+                    <div className="acd-stats-detail-item">
+                      <span>SMAK</span>
+                      <span className="acd-stat-percentage">62.5%</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
