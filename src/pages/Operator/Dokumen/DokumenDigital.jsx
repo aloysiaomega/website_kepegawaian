@@ -1,7 +1,7 @@
 // src/pages/Operator/DokumenDigital/DokumenDigital.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaSearch, FaEye, FaDownload, FaTrash, FaBars } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaDownload, FaBars, FaTrash } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './DokumenDigital.css';
 
@@ -11,53 +11,59 @@ export default function DokumenDigital() {
   const initialData = [
     { 
       id: 1, 
-      namaDokumen: 'Sertifikasi Guru 2025', 
-      deskripsi: 'Transkrip nilai sarjana',
-      guru: 'Ahmad Darmawan, S.Pd', 
-      kategori: 'Sertifikasi',
-      tanggalUpload: '20 Juni 2025', 
-      ukuran: '2.4 MB',
-      status: 'active'
+      nama: 'Laporan PKG 2025', 
+      deskripsi: 'Laporan penilaian kinerja guru',
+      guru: 'Devit Wulandari, S.Pd', 
+      kategori: 'Ijazah & Transkrip', 
+      tanggalUpload: '21 Juni 2025', 
+      ukuran: '16 MB' 
     },
     { 
       id: 2, 
-      namaDokumen: 'Laporan PKG 2025', 
-      deskripsi: 'Laporan penisian kineija guru',
-      guru: 'Dewi Wulandari, S.Pd', 
-      kategori: 'Ijazah & Transkrip',
-      tanggalUpload: '21 Juni 2025', 
-      ukuran: '1.6 MB',
-      status: 'active'
+      nama: 'Sertifikasi Guru 2025', 
+      deskripsi: 'Sertifikasi guru tahun 2025',
+      guru: 'Citra Indah, S.Pd', 
+      kategori: 'Sertifikasi', 
+      tanggalUpload: '26 Juli 2025', 
+      ukuran: '2.7 MB' 
     },
     { 
       id: 3, 
-      namaDokumen: 'Sertifikasi Guru 2025', 
-      deskripsi: 'Sertifikasi guru tahun 2025',
-      guru: 'Citra Indah, S.Pd', 
-      kategori: 'Sertifikasi',
-      tanggalUpload: '26 Juli 2025', 
-      ukuran: '2.7 MB',
-      status: 'active'
+      nama: 'Sertifikat Diktat PPG', 
+      deskripsi: 'Sertifikat pendidikan profesi guru',
+      guru: 'Budi Santoso, S.Pd', 
+      kategori: 'SK & Penugasan', 
+      tanggalUpload: '1 Agustus 2025', 
+      ukuran: '2.1 MB' 
     },
     { 
       id: 4, 
-      namaDokumen: 'Sertifikat Diktat PPG', 
-      deskripsi: 'Sertifikat pendidikan profesi guru',
-      guru: 'Budi Santoso, S.Pd', 
-      kategori: 'SK & Penugasan',
-      tanggalUpload: '1 Agustus 2025', 
-      ukuran: '2.1 MB',
-      status: 'active'
+      nama: 'Ijazah S1 Pendidikan', 
+      deskripsi: 'Ijazah Sarjana Pendidikan',
+      guru: 'Siti Rahayu, S.Pd', 
+      kategori: 'Ijazah & Transkrip', 
+      tanggalUpload: '15 Mei 2025', 
+      ukuran: '3.2 MB' 
+    },
+    { 
+      id: 5, 
+      nama: 'SK Pangkat Terakhir', 
+      deskripsi: 'Surat Keputusan Pangkat',
+      guru: 'Ahmad Darmawan, S.Pd', 
+      kategori: 'SK & Penugasan', 
+      tanggalUpload: '10 April 2025', 
+      ukuran: '1.8 MB' 
     }
   ];
 
   const [list, setList] = useState(initialData);
   const [query, setQuery] = useState('');
   const [kategoriFilter, setKategoriFilter] = useState('all');
-  const [jenisFileFilter, setJenisFileFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [dokumenToDelete, setDokumenToDelete] = useState(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -76,15 +82,15 @@ export default function DokumenDigital() {
   // Filter data based on search and filters
   const filteredData = list.filter(dokumen => {
     // Filter berdasarkan pencarian
-    const searchMatch = (dokumen.namaDokumen + ' ' + dokumen.deskripsi + ' ' + dokumen.guru)
+    const searchMatch = (dokumen.nama + ' ' + dokumen.deskripsi + ' ' + dokumen.guru + ' ' + dokumen.kategori)
       .toLowerCase()
       .includes(query.toLowerCase());
     
     // Filter berdasarkan kategori
     const kategoriMatch = kategoriFilter === 'all' || dokumen.kategori === kategoriFilter;
     
-    // Filter berdasarkan status
-    const statusMatch = statusFilter === 'all' || dokumen.status === statusFilter;
+    // Filter berdasarkan status (dalam contoh ini kita tidak punya status, jadi selalu true)
+    const statusMatch = statusFilter === 'all';
     
     return searchMatch && kategoriMatch && statusMatch;
   });
@@ -92,33 +98,44 @@ export default function DokumenDigital() {
   // Get unique kategori options from data
   const kategoriOptions = ['all', ...new Set(list.map(dokumen => dokumen.kategori))];
   
-  // Get unique status options
-  const statusOptions = ['all', 'active', 'inactive'];
+  // Get unique status options (dummy untuk contoh)
+  const statusOptions = ['all', 'Terverifikasi', 'Belum Verifikasi'];
+
+  const handleDeleteClick = (dokumen) => {
+    setDokumenToDelete(dokumen);
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (dokumenToDelete) {
+      setList(prev => prev.filter(item => item.id !== dokumenToDelete.id));
+      setShowDeleteModal(false);
+      setDokumenToDelete(null);
+    }
+  };
   
-  // Get unique jenis file options
-  const jenisFileOptions = ['all', 'PDF', 'DOC', 'DOCX', 'JPEG', 'PNG'];
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false);
+    setDokumenToDelete(null);
+  };
 
   const handleToggleSidebar = () => {
     setCollapsed(prev => !prev);
   };
 
-  const handleTambahDokumen = () => {
+  const handleAdd = () => {
     alert('Fungsi tambah dokumen akan diimplementasikan');
   };
 
   const handleView = (id) => {
+    // Navigate to ViewDokumen page dengan parameter id
     navigate(`/operator/dokumen-digital/view/${id}`);
   };
 
   const handleDownload = (id) => {
-    alert(`Download dokumen dengan ID: ${id}`);
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus dokumen ini?')) {
-      setList(prev => prev.filter(item => item.id !== id));
-      alert('Dokumen berhasil dihapus');
-    }
+    // Logic untuk download dokumen
+    const dokumen = list.find(d => d.id === id);
+    alert(`Mengunduh dokumen: ${dokumen.nama}`);
   };
 
   return (
@@ -137,13 +154,6 @@ export default function DokumenDigital() {
         {/* Top Bar */}
         <header className="dd-header">
           <div className="dd-header-left">
-            <button 
-              className="dd-toggle-btn" 
-              onClick={handleToggleSidebar}
-              aria-label="Toggle Sidebar"
-            >
-              <FaBars />
-            </button>
             <div className="dd-title-section">
               <h1>Dokumen Digital</h1>
               <div className="dd-subtitle">SMK N 2 Sukoharjo</div>
@@ -156,42 +166,29 @@ export default function DokumenDigital() {
               <span className="dd-notification-dot" />
             </button>
 
-            <button className="dd-tambah-btn" onClick={handleTambahDokumen}>
+            <button className="dd-add-btn" onClick={handleAdd}>
               <FaPlus />
-              <span>Tambah Dokumen</span>
+              <span>Tambah Guru</span>
             </button>
           </div>
         </header>
 
         {/* Main Content */}
         <div className="dd-content">
+
           {/* Filters Section */}
           <div className="dd-filters-section">
+            <h3>Kategori Dokumen</h3>
             <div className="dd-filters-grid">
               <div className="dd-filter-group">
-                <label>Kategori Dokumen</label>
+                <label>Kategori</label>
                 <select 
                   value={kategoriFilter} 
                   onChange={(e) => setKategoriFilter(e.target.value)}
                 >
-                  <option value="all">Semua Kategori</option>
-                  {kategoriOptions.filter(opt => opt !== 'all').map(kategori => (
+                  {kategoriOptions.map(kategori => (
                     <option key={kategori} value={kategori}>
-                      {kategori}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="dd-filter-group">
-                <label>Jenis File</label>
-                <select 
-                  value={jenisFileFilter} 
-                  onChange={(e) => setJenisFileFilter(e.target.value)}
-                >
-                  {jenisFileOptions.map(jenis => (
-                    <option key={jenis} value={jenis}>
-                      {jenis === 'all' ? 'Semua Jenis' : jenis}
+                      {kategori === 'all' ? 'Semua Kategori' : kategori}
                     </option>
                   ))}
                 </select>
@@ -205,7 +202,7 @@ export default function DokumenDigital() {
                 >
                   {statusOptions.map(status => (
                     <option key={status} value={status}>
-                      {status === 'all' ? 'Semua Status' : status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+                      {status === 'all' ? 'Semua Status' : status}
                     </option>
                   ))}
                 </select>
@@ -216,7 +213,7 @@ export default function DokumenDigital() {
                 <div className="dd-search-wrapper">
                   <input
                     type="text"
-                    placeholder="Nama dokumen atau guru"
+                    placeholder="Nama dokumen, guru, atau kategori"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     aria-label="Cari Dokumen"
@@ -226,11 +223,20 @@ export default function DokumenDigital() {
                   </button>
                 </div>
               </div>
+
+              <button 
+                className="dd-add-btn" 
+                onClick={() => navigate('/operator/dokumen/upload')}
+                >
+                <FaPlus />
+                <span>Upload Dokumen</span>
+                </button>
             </div>
           </div>
 
           {/* Table Section */}
           <div className="dd-table-section">
+            <h3>Daftar Dokumen</h3>
             <div className="dd-table-container">
               <table className="dd-data-table">
                 <thead>
@@ -246,8 +252,8 @@ export default function DokumenDigital() {
                 <tbody>
                   {filteredData.map((dokumen) => (
                     <tr key={dokumen.id}>
-                      <td className="dd-doc-cell">
-                        <div className="dd-doc-name">{dokumen.namaDokumen}</div>
+                      <td className="dd-name-cell">
+                        <div className="dd-doc-name">{dokumen.nama}</div>
                         <div className="dd-doc-desc">{dokumen.deskripsi}</div>
                       </td>
                       <td className="dd-guru-cell">{dokumen.guru}</td>
@@ -269,15 +275,15 @@ export default function DokumenDigital() {
                           className="dd-action-btn dd-download-btn" 
                           aria-label="Download dokumen"
                           onClick={() => handleDownload(dokumen.id)}
-                          title="Download"
+                          title="Download Dokumen"
                         >
                           <FaDownload />
                         </button>
-                        <button 
+                         <button 
                           className="dd-action-btn dd-delete-btn" 
                           aria-label="Hapus dokumen"
-                          onClick={() => handleDelete(dokumen.id)}
-                          title="Hapus"
+                          onClick={() => handleDeleteClick(dokumen)}
+                          title="Hapus Dokumen"
                         >
                           <FaTrash />
                         </button>
@@ -324,6 +330,35 @@ export default function DokumenDigital() {
           </div>
         </div>
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="dd-modal-overlay">
+          <div className="dd-modal">
+            <div className="dd-modal-header">
+              <h3>Konfirmasi Hapus</h3>
+            </div>
+            <div className="dd-modal-body">
+              <p>Apakah Anda yakin ingin menghapus dokumen <strong>"{dokumenToDelete?.nama}"</strong>?</p>
+              <p>Tindakan ini tidak dapat dibatalkan.</p>
+            </div>
+            <div className="dd-modal-footer">
+              <button 
+                className="dd-modal-cancel-btn"
+                onClick={handleDeleteCancel}
+              >
+                Batal
+              </button>
+              <button 
+                className="dd-modal-confirm-btn"
+                onClick={handleDeleteConfirm}
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
