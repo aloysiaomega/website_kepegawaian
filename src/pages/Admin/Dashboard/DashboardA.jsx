@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { FaBars, FaSearch, FaEye, FaSchool, FaUserGraduate, FaClock, FaUsers } from 'react-icons/fa';
+import { FaSearch, FaEye, FaSchool, FaUserGraduate, FaClock, FaUsers, FaPlus } from 'react-icons/fa';
 import SidebarAdminCabdin from '../Sidebar/SidebarA';
+import { useNavigate } from 'react-router-dom';
 import './DashboardA.css';
 
 export default function DashboardAdminCabdin() {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const handleViewDetail = (sekolahId) => {
+    navigate(`/detail-sekolah/${sekolahId}`);
+    // atau jika tanpa parameter: navigate('/detail-sekolah');
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -24,6 +30,10 @@ export default function DashboardAdminCabdin() {
 
   const handleToggleSidebar = () => {
     setCollapsed(prev => !prev);
+  };
+
+  const handleTambahSekolah = () => {
+    navigate('/tambah-sekolah');
   };
 
   // Data statistik
@@ -204,6 +214,8 @@ export default function DashboardAdminCabdin() {
           </div>
 
           <div className="acd-header-actions">
+            <div className="acd-search-wrapper">
+            </div>
             <button className="acd-notification-btn" aria-label="Notifikasi">
               🔔
               <span className="acd-notification-dot" />
@@ -237,18 +249,27 @@ export default function DashboardAdminCabdin() {
             <div className="acd-section-header">
               <h2 className="acd-section-title">Performa Sekolah</h2>
             </div>
-            <div className="acd-search-wrapper">
-              <input
-                type="text"
-                placeholder="Cari sekolah..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="Cari sekolah"
-              />
-              <button className="acd-search-btn" aria-label="Search">
-                <FaSearch />
+
+            {/* Search and Add Button Row */}
+            <div className="acd-search-add-row">
+              <div className="acd-search-wrapper">
+                <input
+                  type="text"
+                  placeholder="Cari sekolah..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  aria-label="Cari sekolah"
+                />
+                <button className="acd-search-btn" aria-label="Search">
+                  <FaSearch />
+                </button>
+              </div>
+              
+              <button className="acd-add-school-btn" onClick={handleTambahSekolah}>
+                <FaPlus className="acd-add-icon" />
+                Tambah Sekolah
               </button>
-            </div><br />
+            </div>
 
             <div className="acd-table-container">
               <table className="acd-performance-table">
@@ -286,6 +307,7 @@ export default function DashboardAdminCabdin() {
                           className="acd-action-btn acd-view-btn" 
                           aria-label="Lihat detail"
                           title="Lihat Detail"
+                          onClick={() => handleViewDetail(sekolah.id)} // Ganti dengan ID sekolah yang sesuai
                         >
                           <FaEye />
                         </button>
@@ -360,8 +382,8 @@ export default function DashboardAdminCabdin() {
             </div>
 
             {/* Statistik Wilayah Section */}
-              <h3 className="acd-bottom-section-title">Statistik Wilayah</h3>
             <div className="acd-region-stats">
+              <h3 className="acd-bottom-section-title">Statistik Wilayah</h3>
               <div className="acd-stats-content">
                 <div className="acd-pie-charts">
                   <div className="acd-pie-chart-group">

@@ -356,7 +356,6 @@
   padding: 16px 20px;
   font-size: 14px;
   vertical-align: middle;
-  border-bottom: 1px solid var(--acd-border-color);
 }
 
 .acd-performance-table tbody tr:nth-child(even) {
@@ -870,4 +869,67 @@
 
 .acd-table-container::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Search and Add Button Row */
+.acd-search-add-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.acd-add-school-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--acd-primary-color), var(--acd-secondary-color));
+  color: white;
+  border: none;
+  border-radius: var(--acd-border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--acd-transition);
+  box-shadow: var(--acd-shadow);
+}
+
+.acd-add-school-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--acd-shadow-lg);
+  background: linear-gradient(135deg, var(--acd-primary-light), var(--acd-secondary-color));
+}
+
+.acd-add-icon {
+  font-size: 14px;
+}
+
+/* Responsive Design untuk Search Add Row */
+@media (max-width: 768px) {
+  .acd-search-add-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .acd-add-school-btn {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .acd-search-wrapper {
+    width: 100%;
+  }
+  
+  .acd-search-wrapper input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .acd-search-add-row {
+    margin-bottom: 16px;
+  }
 }

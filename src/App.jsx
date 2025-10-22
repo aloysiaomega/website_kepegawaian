@@ -17,6 +17,8 @@ import GantiPassword from './pages/Operator/GantiPassword/GantiPassword.jsx'
 
 // Admin Cabdin Routes
 import DashboardA from './pages/Admin/Dashboard/DashboardA.jsx'
+import TambahSekolah from './pages/Admin/Dashboard/TambahSekolah.jsx'
+import DetailSekolah from './pages/Admin/Dashboard/DetailSekolah.jsx'
 
 // Route Protection Component
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
@@ -116,15 +118,10 @@ export default function App() {
         />
 
         {/* Admin Cabdin Routes */}
-        <Route 
-          path="/admin-cabdin/dashboard" 
-          element={
-            <ProtectedRoute allowedRoles={['admin_cabdin']}>
-              <DashboardA />
-            </ProtectedRoute>
-          } 
-        />
-
+        <Route path="/admin-cabdin/dashboard" element={<ProtectedRoute allowedRoles={['admin_cabdin']}><DashboardA /></ProtectedRoute>} />
+        <Route path="/tambah-sekolah" element={<TambahSekolah />} />
+        <Route path="/detail-sekolah/:id" element={<ProtectedRoute allowedRoles={['admin_cabdin']}><DetailSekolah /></ProtectedRoute>} />
+        
         {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
