@@ -159,7 +159,7 @@ const DataGuru = () => {
             <div className="acd-table-header">
               <h3>Daftar Guru</h3>
               <span className="acd-table-count">{filteredGuru.length} guru ditemukan</span>
-            </div>
+            </div> <br />
 
             <div className="acd-table-container">
               <table className="acd-performance-table">

@@ -135,39 +135,60 @@
 
 .acd-table-container {
   overflow-x: auto;
+  border-radius: var(--acd-border-radius);
+  box-shadow: var(--acd-shadow);
+  margin-bottom: 24px;
+  border: 1px solid var(--acd-border-color);
 }
 
-.acd-table-th {
-  background: #f1f5f9;
+.acd-performance-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--acd-card-bg);
+  min-width: 1000px;
+}
+
+/* Header Tabel - Sama seperti Dashboard */
+.acd-performance-table thead {
+  background: linear-gradient(135deg, var(--acd-primary-color), var(--acd-secondary-color));
+}
+
+.acd-performance-table th {
   padding: 16px 20px;
   text-align: left;
-  font-size: 14px;
   font-weight: 600;
-  color: var(--acd-text-color);
-  border-bottom: 1px solid var(--acd-border-color);
+  font-size: 14px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--acd-border-color);
 }
 
-.acd-table-row {
+.acd-performance-table td {
+  padding: 16px 20px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* Baris tabel - Sama seperti Dashboard */
+.acd-performance-table tbody tr:nth-child(even) {
+  background-color: rgba(243, 244, 246, 0.5);
+}
+
+.acd-performance-table tbody tr {
   transition: var(--acd-transition);
   border-bottom: 1px solid var(--acd-border-color);
 }
 
-.acd-table-row:hover {
-  background-color: #f8fafc;
+.acd-performance-table tbody tr:hover {
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
-.acd-table-row:last-child {
+.acd-performance-table tbody tr:last-child {
   border-bottom: none;
 }
 
-.acd-table-td {
-  padding: 20px;
-  font-size: 14px;
-  color: var(--acd-text-color);
-  vertical-align: top;
-}
-
-/* Guru Info */
+/* Table Cells */
 .acd-guru-info {
   display: flex;
   flex-direction: column;
@@ -221,6 +242,42 @@
   color: var(--acd-info-color);
 }
 
+/* Actions Cell - Sama seperti Dashboard */
+.acd-actions-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.acd-action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.acd-view-btn {
+  color: var(--acd-primary-light);
+}
+
+.acd-view-btn:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.acd-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
 .acd-text-center {
   text-align: center;
 }
@@ -254,6 +311,13 @@
   margin: 0;
 }
 
+.acd-no-data-message {
+  text-align: center;
+  padding: 40px !important;
+  color: var(--acd-text-muted);
+  font-style: italic;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .acd-filter-grid {
@@ -278,8 +342,8 @@
     align-items: flex-start;
   }
   
-  .acd-table-th,
-  .acd-table-td {
+  .acd-performance-table th,
+  .acd-performance-table td {
     padding: 12px 16px;
   }
 }
@@ -306,10 +370,29 @@
   }
 }
 
-.acd-table-row {
+.acd-performance-table tbody tr {
   animation: fadeInUp 0.5s ease-out;
 }
 
-.acd-table-row:nth-child(1) { animation-delay: 0.1s; }
-.acd-table-row:nth-child(2) { animation-delay: 0.2s; }
-.acd-table-row:nth-child(3) { animation-delay: 0.3s; }
+.acd-performance-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.acd-performance-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.acd-performance-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+
+/* Scrollbar Styling */
+.acd-table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.acd-table-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.acd-table-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.acd-table-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
