@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DataGuru.css';
 import SidebarAdminCabdin from '../Sidebar/SidebarA';
 import { FaSearch, FaEye, FaFilter, FaBell } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const DataGuru = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -9,6 +10,11 @@ const DataGuru = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSekolah, setSelectedSekolah] = useState('');
   const [selectedMapel, setSelectedMapel] = useState('');
+  const navigate = useNavigate();
+
+  const handleViewDetail = (guruId) => {
+    navigate(`/admin-cabdin/data-guru/detail/${guruId}`);
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -96,7 +102,7 @@ const DataGuru = () => {
 
           <div className="acd-header-actions">
             <button className="acd-notification-btn" aria-label="Notifikasi">
-              <FaBell />
+              🔔
               <span className="acd-notification-dot" />
             </button>
           </div>
@@ -159,7 +165,7 @@ const DataGuru = () => {
             <div className="acd-table-header">
               <h3>Daftar Guru</h3>
               <span className="acd-table-count">{filteredGuru.length} guru ditemukan</span>
-            </div> <br />
+            </div>
 
             <div className="acd-table-container">
               <table className="acd-performance-table">
@@ -201,6 +207,7 @@ const DataGuru = () => {
                           className="acd-action-btn acd-view-btn"
                           aria-label="Lihat detail"
                           title="Lihat Detail"
+                          onClick={() => handleViewDetail(guru.id)}
                         >
                           <FaEye />
                         </button>

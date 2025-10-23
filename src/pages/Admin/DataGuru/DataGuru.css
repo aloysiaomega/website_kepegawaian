@@ -102,6 +102,39 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+/* Notification Bell Styles - Sama seperti Dashboard */
+.acd-notification-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--acd-border-radius);
+  cursor: pointer;
+  color: var(--acd-warning-color);
+  font-size: 18px;
+  transition: var(--acd-transition);
+}
+
+.acd-notification-btn:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--acd-primary-light);
+}
+
+.acd-notification-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--acd-danger-color);
+  border-radius: 50%;
+  border: 2px solid var(--acd-card-bg);
+}
+
 /* Table Section */
 .acd-table-section {
   background: var(--acd-card-bg);
@@ -155,7 +188,7 @@
 
 .acd-performance-table th {
   padding: 16px 20px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 14px;
   color: white;
@@ -168,6 +201,13 @@
   padding: 16px 20px;
   font-size: 14px;
   vertical-align: middle;
+}
+
+/* Text Alignment untuk Kolom Tertentu */
+.acd-performance-table td:nth-child(4), /* Kolom Tgl Pensiun */
+.acd-performance-table td:nth-child(5), /* Kolom Sisa Waktu Pensiun */
+.acd-performance-table td:nth-child(6) { /* Kolom Aksi */
+  text-align: center;
 }
 
 /* Baris tabel - Sama seperti Dashboard */
@@ -193,6 +233,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  text-align: left;
 }
 
 .acd-guru-nama {
@@ -221,6 +262,12 @@
 .acd-mapel-badge {
   background: rgba(124, 58, 237, 0.1);
   color: var(--acd-secondary-color);
+}
+
+/* Tanggal Pensiun */
+.acd-tanggal {
+  font-weight: 500;
+  color: var(--acd-text-color);
 }
 
 /* Status Badges */
@@ -262,6 +309,7 @@
   font-size: 0px;
   transition: all 0.3s ease;
   background: transparent;
+  margin-left: 50px;
 }
 
 .acd-view-btn {

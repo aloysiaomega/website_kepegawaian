@@ -64,21 +64,6 @@ export default function SidebarAdminCabdin({ user, collapsed, onToggle }) {
               <span className="menu-admin-label">Dokumen Digital</span>
             </NavLink>
 
-            <NavLink to="/admin-cabdin/usul-perubahan-data" className="menu-admin-item">
-              <FaExchangeAlt className="menu-admin-icon" />
-              <span className="menu-admin-label">Usul Perubahan Data</span>
-            </NavLink>
-
-            <NavLink to="/admin-cabdin/pelaporan-analysis" className="menu-admin-item">
-              <FaChartLine className="menu-admin-icon" />
-              <span className="menu-admin-label">Pelaporan & Analysis</span>
-            </NavLink>
-
-            <NavLink to="/admin-cabdin/master-data" className="menu-admin-item">
-              <FaDatabase className="menu-admin-icon" />
-              <span className="menu-admin-label">Master Data</span>
-            </NavLink>
-
             <NavLink to="/admin-cabdin/audit-notifikasi" className="menu-admin-item">
               <FaBell className="menu-admin-icon" />
               <span className="menu-admin-label">Audit & Notifikasi</span>
