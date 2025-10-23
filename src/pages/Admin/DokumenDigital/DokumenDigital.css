@@ -1,3 +1,5 @@
+/* DokumenDigital.css - Konsisten dengan DataGuru.css */
+
 :root {
   --acd-primary-color: #1e40af;
   --acd-primary-light: #3b82f6;
@@ -75,7 +77,7 @@
   width: calc(100vw - var(--acd-sidebar-collapsed));
 }
 
-/* HEADER - SAMA PERSIS DENGAN DASHBOARD.CSS */
+/* HEADER - SAMA PERSIS DENGAN DATAGURU */
 .acd-header {
   display: flex;
   align-items: center;
@@ -92,26 +94,6 @@
   display: flex;
   align-items: center;
   gap: 16px;
-}
-
-.acd-toggle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: transparent;
-  border-radius: var(--acd-border-radius);
-  cursor: pointer;
-  color: var(--acd-text-color);
-  font-size: 18px;
-  transition: var(--acd-transition);
-}
-
-.acd-toggle-btn:hover {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: var(--acd-primary-light);
 }
 
 .acd-title-section h1 {
@@ -137,51 +119,6 @@
   display: flex;
   align-items: center;
   gap: 16px;
-}
-
-.acd-search-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.acd-search-wrapper input {
-  padding: 12px 16px;
-  padding-right: 45px;
-  border: 1px solid var(--acd-border-color);
-  border-radius: var(--acd-border-radius);
-  font-size: 14px;
-  transition: var(--acd-transition);
-  background: var(--acd-card-bg);
-  color: var(--acd-text-color);
-  min-width: 280px;
-}
-
-.acd-search-wrapper input:focus {
-  outline: none;
-  border-color: var(--acd-primary-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.acd-search-btn {
-  position: absolute;
-  right: 8px;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  color: var(--acd-text-muted);
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--acd-transition);
-}
-
-.acd-search-btn:hover {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--acd-primary-light);
 }
 
 .acd-notification-btn {
@@ -223,10 +160,10 @@
   gap: 28px;
 }
 
-/* Filter Section */
+/* Filter Section - SAMA DENGAN DATAGURU */
 .acd-filter-section {
   background: var(--acd-card-bg);
-  padding: 24px 28px;
+  padding: 24px 32px;
   border-radius: var(--acd-border-radius);
   box-shadow: var(--acd-shadow);
   border: 1px solid var(--acd-border-color);
@@ -325,193 +262,153 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Document Section */
-.acd-document-section {
+/* Table Section - SAMA DENGAN DATAGURU */
+.acd-table-section {
   background: var(--acd-card-bg);
-  padding: 28px;
   border-radius: var(--acd-border-radius);
   box-shadow: var(--acd-shadow);
   border: 1px solid var(--acd-border-color);
+  overflow: hidden;
 }
 
-.acd-section-header {
-  margin-bottom: 24px;
+.acd-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--acd-border-color);
+  background: #f8fafc;
 }
 
-.acd-section-title {
-  font-size: 20px;
-  font-weight: 700;
+.acd-table-header h3 {
+  font-size: 18px;
+  font-weight: 600;
   color: var(--acd-text-color);
   margin: 0;
-  padding-bottom: 12px;
+}
+
+.acd-table-count {
+  font-size: 14px;
+  color: var(--acd-text-muted);
+  font-weight: 500;
+}
+
+.acd-table-container {
+  overflow-x: auto;
+}
+
+.acd-performance-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--acd-card-bg);
+  min-width: 1000px;
+}
+
+/* Header Tabel - Gradient yang sama dengan DataGuru */
+.acd-performance-table thead {
+  background: linear-gradient(135deg, var(--acd-primary-color), var(--acd-secondary-color));
+}
+
+.acd-performance-table th {
+  padding: 16px 20px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   border-bottom: 2px solid var(--acd-border-color);
 }
 
-/* Search and Add Button Row */
-.acd-search-add-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.acd-upload-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, var(--acd-primary-color), var(--acd-secondary-color));
-  color: white;
-  border: none;
-  border-radius: var(--acd-border-radius);
+.acd-performance-table td {
+  padding: 16px 20px;
   font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--acd-border-color);
+}
+
+/* Text Alignment untuk Kolom Tertentu */
+.acd-performance-table td:nth-child(4), /* Kolom Tanggal Upload */
+.acd-performance-table td:nth-child(5), /* Kolom Ukuran */
+.acd-performance-table td:nth-child(6), /* Kolom Status */
+.acd-performance-table td:nth-child(7) { /* Kolom Aksi */
+  text-align: center;
+}
+
+/* Baris tabel - Sama seperti DataGuru */
+.acd-performance-table tbody tr:nth-child(even) {
+  background-color: rgba(243, 244, 246, 0.5);
+}
+
+.acd-performance-table tbody tr {
   transition: var(--acd-transition);
-  box-shadow: var(--acd-shadow);
 }
 
-.acd-upload-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--acd-shadow-lg);
-  background: linear-gradient(135deg, var(--acd-primary-light), var(--acd-secondary-color));
+.acd-performance-table tbody tr:hover {
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
-.acd-add-icon {
-  font-size: 14px;
+.acd-performance-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
-/* Document Grid */
-.acd-document-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-/* Document Card */
-.acd-document-card {
-  background: var(--acd-card-bg);
-  padding: 24px;
-  border-radius: var(--acd-border-radius);
-  box-shadow: var(--acd-shadow);
-  border: 1px solid var(--acd-border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  transition: var(--acd-transition);
-  cursor: pointer;
-}
-
-.acd-document-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--acd-shadow-lg);
-  border-color: var(--acd-primary-light);
-}
-
-.acd-document-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.acd-document-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  flex-shrink: 0;
-  background: linear-gradient(135deg, var(--acd-primary-color), var(--acd-secondary-color));
-  color: white;
-}
-
-.acd-document-info {
-  flex: 1;
-}
-
-.acd-document-name {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--acd-text-color);
-  margin: 0 0 8px 0;
-}
-
-.acd-document-meta {
+/* Table Cells */
+.acd-dokumen-info {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  text-align: left;
 }
 
-.acd-document-detail {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
+.acd-dokumen-nama {
+  font-weight: 600;
+  color: var(--acd-text-color);
+  font-size: 14px;
+}
+
+.acd-dokumen-deskripsi {
+  font-size: 12px;
   color: var(--acd-text-muted);
 }
 
-.acd-document-detail-icon {
+/* Badges - WARNA YANG SAMA DENGAN DATAGURU */
+.acd-guru-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(59, 130, 246, 0.1);
   color: var(--acd-primary-color);
-  font-size: 14px;
-}
-
-.acd-document-actions {
-  display: flex;
-  gap: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--acd-border-color);
-}
-
-.acd-document-action-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border: 1px solid var(--acd-border-color);
   border-radius: 6px;
-  background: var(--acd-card-bg);
-  color: var(--acd-text-color);
   font-size: 12px;
   font-weight: 500;
-  cursor: pointer;
-  transition: var(--acd-transition);
 }
 
-.acd-document-action-btn:hover {
-  background: var(--acd-primary-color);
-  color: white;
-  border-color: var(--acd-primary-color);
+.acd-kategori-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--acd-secondary-color);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
-.acd-download-btn:hover {
-  background: var(--acd-success-color);
-  border-color: var(--acd-success-color);
+/* Tanggal dan Ukuran */
+.acd-tanggal,
+.acd-ukuran {
+  font-weight: 500;
+  color: var(--acd-text-color);
 }
 
-.acd-view-btn:hover {
-  background: var(--acd-primary-color);
-  border-color: var(--acd-primary-color);
-}
-
-/* Status Badges */
+/* Status Badges - WARNA YANG SAMA DENGAN DATAGURU */
 .acd-status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 11px;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.acd-status-approved {
+.acd-status-verified {
   background: rgba(16, 185, 129, 0.1);
   color: var(--acd-success-color);
 }
@@ -521,12 +418,57 @@
   color: var(--acd-warning-color);
 }
 
-.acd-status-rejected {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--acd-danger-color);
+/* Actions Cell - SAMA PERSIS DENGAN DATAGURU */
+.acd-actions-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Empty State */
+.acd-action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.acd-view-btn {
+  color: var(--acd-primary-light);
+  margin-left: -5px;
+}
+
+.acd-view-btn:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.acd-download-btn {
+  color: var(--acd-success-color);
+  margin-left: -5px;
+}
+
+.acd-download-btn:hover {
+  background-color: rgba(16, 185, 129, 0.1);
+  transform: translateY(-2px);
+}
+
+.acd-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.acd-text-center {
+  text-align: center;
+}
+
+/* Empty State - SAMA DENGAN DATAGURU */
 .acd-empty-state {
   display: flex;
   flex-direction: column;
@@ -563,7 +505,7 @@
   font-style: italic;
 }
 
-/* Responsive Design */
+/* Responsive Design - SAMA DENGAN DATAGURU */
 @media (max-width: 1024px) {
   .acd-main {
     margin-left: 0 !important;
@@ -582,15 +524,6 @@
   
   .acd-filter-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .acd-search-wrapper input {
-    min-width: 200px;
-  }
-  
-  .acd-document-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
   }
 }
 
@@ -619,37 +552,16 @@
     gap: 16px;
   }
   
-  .acd-document-section {
-    padding: 20px;
-  }
-  
-  .acd-search-add-row {
+  .acd-table-header {
+    padding: 16px 20px;
     flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    gap: 8px;
+    align-items: flex-start;
   }
   
-  .acd-upload-btn {
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .acd-search-wrapper {
-    width: 100%;
-  }
-  
-  .acd-search-wrapper input {
-    min-width: auto;
-    width: 100%;
-  }
-  
-  .acd-document-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .acd-document-actions {
-    flex-direction: column;
+  .acd-performance-table th,
+  .acd-performance-table td {
+    padding: 12px 16px;
   }
 }
 
@@ -662,24 +574,41 @@
     padding: 16px;
   }
   
-  .acd-document-section {
-    padding: 16px;
+  .acd-filter-section {
+    padding: 16px 20px;
   }
   
-  .acd-document-card {
-    padding: 20px;
+  .acd-dokumen-info {
+    min-width: 150px;
   }
   
-  .acd-title-section h1 {
-    font-size: 22px;
-  }
-  
-  .acd-search-add-row {
-    margin-bottom: 16px;
+  .acd-actions-cell {
+    flex-direction: column;
+    gap: 4px;
   }
 }
 
-/* Scrollbar Styling */
+/* Animation - SAMA DENGAN DATAGURU */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.acd-performance-table tbody tr {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.acd-performance-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.acd-performance-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.acd-performance-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+
+/* Scrollbar Styling - SAMA DENGAN DATAGURU */
 .acd-main::-webkit-scrollbar {
   width: 8px;
 }
@@ -698,25 +627,20 @@
   background: #94a3b8;
 }
 
-/* Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.acd-table-container::-webkit-scrollbar {
+  height: 8px;
 }
 
-.acd-document-card {
-  animation: fadeInUp 0.5s ease-out;
+.acd-table-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
 }
 
-.acd-document-card:nth-child(1) { animation-delay: 0.1s; }
-.acd-document-card:nth-child(2) { animation-delay: 0.2s; }
-.acd-document-card:nth-child(3) { animation-delay: 0.3s; }
-.acd-document-card:nth-child(4) { animation-delay: 0.4s; }
-.acd-document-card:nth-child(5) { animation-delay: 0.5s; }
-.acd-document-card:nth-child(6) { animation-delay: 0.6s; }
+.acd-table-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.acd-table-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
