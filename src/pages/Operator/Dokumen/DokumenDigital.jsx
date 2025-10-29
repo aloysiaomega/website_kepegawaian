@@ -1,7 +1,7 @@
 // src/pages/Operator/DokumenDigital/DokumenDigital.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaSearch, FaEye, FaDownload, FaBars, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaDownload, FaBars, FaTrash, FaTimes, FaPrint, FaFilePdf } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './DokumenDigital.css';
 
@@ -64,6 +64,8 @@ export default function DokumenDigital() {
   const [isMobile, setIsMobile] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [dokumenToDelete, setDokumenToDelete] = useState(null);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [selectedDokumen, setSelectedDokumen] = useState(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -128,14 +130,32 @@ export default function DokumenDigital() {
   };
 
   const handleView = (id) => {
-    // Navigate to ViewDokumen page dengan parameter id
-    navigate(`/operator/dokumen-digital/view/${id}`);
+    const dokumen = list.find(d => d.id === id);
+    if (dokumen) {
+      setSelectedDokumen(dokumen);
+      setShowPreviewModal(true);
+    }
   };
 
   const handleDownload = (id) => {
     // Logic untuk download dokumen
     const dokumen = list.find(d => d.id === id);
     alert(`Mengunduh dokumen: ${dokumen.nama}`);
+  };
+
+  const handleClosePreviewModal = () => {
+    setShowPreviewModal(false);
+    setSelectedDokumen(null);
+  };
+
+  const handlePrintDokumen = () => {
+    alert(`Mencetak dokumen: ${selectedDokumen?.nama}`);
+  };
+
+  const handleDownloadFromPreview = () => {
+    if (selectedDokumen) {
+      alert(`Mengunduh dokumen: ${selectedDokumen.nama}`);
+    }
   };
 
   return (
@@ -354,6 +374,83 @@ export default function DokumenDigital() {
                 onClick={handleDeleteConfirm}
               >
                 Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Preview Dokumen Modal */}
+      {showPreviewModal && selectedDokumen && (
+        <div className="dd-modal-overlay">
+          <div className="dd-preview-modal">
+            <div className="dd-preview-header">
+              <h2>Preview Dokumen</h2>
+              <button 
+                className="dd-preview-close"
+                onClick={handleClosePreviewModal}
+              >
+                X
+              </button>
+            </div>
+            
+            <div className="dd-preview-content">
+              <div className="dd-dokumen-info-section">
+                <h3>Informasi Dokumen</h3>
+                
+                <div className="dd-info-grid">
+                  <div className="dd-info-item">
+                    <label>Nama File:</label>
+                    <span>{selectedDokumen.nama}</span>
+                  </div>
+                  <div className="dd-info-item">
+                    <label>Guru:</label>
+                    <span>{selectedDokumen.guru}</span>
+                  </div>
+                  <div className="dd-info-item">
+                    <label>Kategori:</label>
+                    <span>{selectedDokumen.kategori}</span>
+                  </div>
+                  <div className="dd-info-item">
+                    <label>Tanggal Upload:</label>
+                    <span>{selectedDokumen.tanggalUpload}</span>
+                  </div>
+                  <div className="dd-info-item">
+                    <label>Ukuran:</label>
+                    <span>{selectedDokumen.ukuran}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="dd-preview-section">
+                <div className="dd-preview-label">
+                  <span>PDF</span>
+                </div>
+                
+                <div className="dd-preview-placeholder">
+                  <div className="dd-preview-message">
+                    <FaFilePdf className="dd-pdf-icon" />
+                    <h4>Preview dokumen akan ditampilkan di sini</h4>
+                    <p>Fitur preview lengkap akan diimplementasikan di backend</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="dd-preview-footer">
+              <button 
+                className="dd-preview-btn dd-print-btn"
+                onClick={handlePrintDokumen}
+              >
+                <FaPrint />
+                Cetak
+              </button>
+              <button 
+                className="dd-preview-btn dd-download-preview-btn"
+                onClick={handleDownloadFromPreview}
+              >
+                <FaDownload />
+                Unduh Dokumen
               </button>
             </div>
           </div>

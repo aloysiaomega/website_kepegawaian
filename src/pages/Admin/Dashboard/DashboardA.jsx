@@ -10,7 +10,7 @@ export default function DashboardAdminCabdin() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const handleViewDetail = (sekolahId) => {
-    navigate(`/detail-sekolah/${sekolahId}`);
+    navigate(`/admin-cabdin/detail-sekolah/${sekolahId}`);
     // atau jika tanpa parameter: navigate('/detail-sekolah');
   };
 
@@ -33,8 +33,12 @@ export default function DashboardAdminCabdin() {
   };
 
   const handleTambahSekolah = () => {
-    navigate('/tambah-sekolah');
+    navigate('/admin-cabdin/tambah-sekolah');
   };
+
+  const handleDataGuru = () => {
+    navigate('/admin-cabdin/data-guru');
+  }
 
   // Data statistik
   const statsData = [
@@ -212,15 +216,6 @@ export default function DashboardAdminCabdin() {
               <div className="acd-subtitle">Cabang Dinas Pendidikan Wilayah VII</div>
             </div>
           </div>
-
-          <div className="acd-header-actions">
-            <div className="acd-search-wrapper">
-            </div>
-            <button className="acd-notification-btn" aria-label="Notifikasi">
-              🔔
-              <span className="acd-notification-dot" />
-            </button>
-          </div>
         </header>
 
         {/* Main Content */}
@@ -350,16 +345,6 @@ export default function DashboardAdminCabdin() {
               <h3 className="acd-bottom-section-title">Aksi Cepat</h3>
               <div className="acd-quick-actions-grid">
                 <div className="acd-quick-action-card">
-                  <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
-                    <FaClock />
-                  </div>
-                  <div className="acd-quick-action-content">
-                    <h4>Verifikasi Usulan</h4>
-                    <p>Perlu perhatian segera</p>
-                  </div>
-                </div>
-                
-                <div className="acd-quick-action-card">
                   <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
                     <FaSchool />
                   </div>
@@ -373,7 +358,7 @@ export default function DashboardAdminCabdin() {
                   <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
                     <FaUsers />
                   </div>
-                  <div className="acd-quick-action-content">
+                  <div className="acd-quick-action-content" onClick={handleDataGuru} style={{ cursor: 'pointer' }}>
                     <h4>Data Guru</h4>
                     <p>Seluruh Wilayah</p>
                   </div>

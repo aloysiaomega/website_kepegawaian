@@ -245,14 +245,6 @@ const DokumenDigital = () => {
                           >
                             <FaEye />
                           </button>
-                          <button 
-                            className="acd-action-btn acd-download-btn"
-                            aria-label="Download dokumen"
-                            title="Download Dokumen"
-                            onClick={() => handleDownload(dokumen.id)}
-                          >
-                            <FaDownload />
-                          </button>
                         </div>
                       </td>
                     </tr>

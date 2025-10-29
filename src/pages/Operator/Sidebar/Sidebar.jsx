@@ -54,24 +54,9 @@ export default function Sidebar({ user, collapsed, onToggle }) {
               <span className="menu-label">Data Guru Sekolah</span>
             </NavLink>
 
-            <NavLink to="/dokumen" className="menu-item">
+            <NavLink to="/operator/dokumen" className="menu-item">
               <FaFileAlt className="menu-icon" />
               <span className="menu-label">Dokumen Digital</span>
-            </NavLink>
-
-            <NavLink to="/usulan" className="menu-item">
-              <FaExchangeAlt className="menu-icon" />
-              <span className="menu-label">Usul Perubahan Data</span>
-            </NavLink>
-
-            {/* <NavLink to="/pelaporan-sekolah" className="menu-item">
-              <FaChartLine className="menu-icon" />
-              <span className="menu-label">Pelaporan Sekolah</span>
-            </NavLink> */}
-
-            <NavLink to="/ganti-password" className="menu-item">
-              <FaKey className="menu-icon" />
-              <span className="menu-label">Ganti Password</span>
             </NavLink>
           </nav>
         </div>

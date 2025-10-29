@@ -64,19 +64,9 @@ export default function SidebarAdminCabdin({ user, collapsed, onToggle }) {
               <span className="menu-admin-label">Dokumen Digital</span>
             </NavLink>
 
-            <NavLink to="/admin-cabdin/audit-notifikasi" className="menu-admin-item">
-              <FaBell className="menu-admin-icon" />
-              <span className="menu-admin-label">Audit & Notifikasi</span>
-            </NavLink>
-
             <NavLink to="/admin-cabdin/manajemen-pengguna" className="menu-admin-item">
               <FaUsers className="menu-admin-icon" />
               <span className="menu-admin-label">Manajemen Pengguna</span>
-            </NavLink>
-
-            <NavLink to="/admin-cabdin/ganti-password" className="menu-admin-item">
-              <FaKey className="menu-admin-icon" />
-              <span className="menu-admin-label">Ganti Password</span>
             </NavLink>
           </nav>
         </div>

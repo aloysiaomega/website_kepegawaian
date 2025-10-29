@@ -441,7 +441,7 @@
 
 .acd-view-btn {
   color: var(--acd-primary-light);
-  margin-left: -5px;
+  margin-left: -1px;
 }
 
 .acd-view-btn:hover {
