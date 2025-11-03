@@ -126,7 +126,7 @@ export default function DokumenDigital() {
   };
 
   const handleAdd = () => {
-    alert('Fungsi tambah dokumen akan diimplementasikan');
+    navigate('/operator/data-guru/tambah-guru');
   };
 
   const handleView = (id) => {
@@ -181,11 +181,6 @@ export default function DokumenDigital() {
           </div>
 
           <div className="dd-header-actions">
-            <button className="dd-notification-btn" aria-label="Notifikasi">
-              🔔
-              <span className="dd-notification-dot" />
-            </button>
-
             <button className="dd-add-btn" onClick={handleAdd}>
               <FaPlus />
               <span>Tambah Guru</span>

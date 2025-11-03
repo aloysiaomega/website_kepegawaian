@@ -8,6 +8,7 @@ import Login from './pages/Operator/Login/Login.jsx';
 // Operator Components
 import Dashboard from './pages/Operator/Dashboard/Dashboard.jsx';
 import DataGuruOperator from './pages/Operator/DataGuru/DataGuru.jsx';
+import TambahGuru from './pages/Operator/DataGuru/TambahGuru.jsx';
 import EditGuru from './pages/Operator/DataGuru/EditGuru.jsx';
 import ViewGuru from './pages/Operator/DataGuru/ViewGuru.jsx';
 import Mapel from './pages/Operator/Mapel/Mapel.jsx';
@@ -57,6 +58,7 @@ export default function App() {
         {/* Operator Routes */}
         <Route path="/operator/dashboard" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Dashboard /></ProtectedRoute>}/>
         <Route path="/operator/data-guru" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><DataGuruOperator /></ProtectedRoute>}/>
+        <Route path="/operator/data-guru/tambah-guru" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><TambahGuru /></ProtectedRoute>}/>
         <Route path="/operator/data-guru/view/:id" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><ViewGuru /></ProtectedRoute>}/>
         <Route path="/operator/data-guru/edit/:id" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><EditGuru /></ProtectedRoute>} />
         <Route path="/operator/mata-pelajaran" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Mapel /></ProtectedRoute>} />

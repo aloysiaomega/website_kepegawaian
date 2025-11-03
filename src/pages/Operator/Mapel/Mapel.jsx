@@ -58,6 +58,7 @@ export default function Mapel() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [mapelToDelete, setMapelToDelete] = useState(null);
   const [newMapel, setNewMapel] = useState('');
+  const handleAdd = () => {navigate('/operator/data-guru/tambah-guru');};
 
   useEffect(() => {
     const checkMobile = () => {
@@ -157,12 +158,8 @@ export default function Mapel() {
           </div>
 
           <div className="mp-header-actions">
-            <button className="mp-notification-btn" aria-label="Notifikasi">
-              🔔
-              <span className="mp-notification-dot" />
-            </button>
 
-            <button className="mp-add-btn">
+            <button className="mp-add-btn" onClick={handleAdd}>
               <FaPlus />
               <span>Tambah Guru</span>
             </button>
@@ -235,7 +232,6 @@ export default function Mapel() {
                       </td>
                       <td className="mp-name-cell">
                         <div className="mp-mapel-name">
-                          <FaBook className="mp-mapel-icon" />
                           {mapel.nama}
                         </div>
                       </td>

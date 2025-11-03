@@ -86,7 +86,7 @@ export default function DataGuru() {
   };
 
   const handleAdd = () => {
-    alert('Fungsi tambah guru akan diimplementasikan');
+    navigate('/operator/data-guru/tambah-guru');
   };
 
   const handleView = (id) => {
@@ -122,11 +122,6 @@ export default function DataGuru() {
           </div>
 
           <div className="dg-header-actions">
-            <button className="dg-notification-btn" aria-label="Notifikasi">
-              🔔
-              <span className="dg-notification-dot" />
-            </button>
-
             <button className="dg-add-btn" onClick={handleAdd}>
               <FaPlus />
               <span>Tambah Guru</span>

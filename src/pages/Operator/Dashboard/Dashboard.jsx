@@ -18,8 +18,7 @@ import './Dashboard.css'
 
 const SUMMARY = {
   totalGuru: { label: 'Total Guru', value: '42 Guru', meta: '25 PNS, 10 P3K, 7 Honorer' },
-  usulan: { label: 'Usulan Pending', value: '5 Usulan', meta: '76% dari total' },
-  sertifikasi: { label: 'Status Sertifikasi', value: '12 Guru', meta: 'Tahun 2025' },
+  mapel: { label: 'Total Mapel', value: '12 Mapel', meta: '' },
   akanPensiun: { label: 'Guru Akan Pensiun', value: '3 Guru', meta: '2 PNS, 1 P3K' }
 }
 
@@ -107,7 +106,7 @@ export default function DashboardOperator() {
   const pageItems = filtered.slice((page - 1) * perPage, page * perPage)
 
   const handleToggle = () => setCollapsed(s => !s)
-  const handleAdd = () => alert('Tambah guru (mock)')
+  const handleAdd = () => {navigate('/operator/data-guru/tambah-guru');};
   const handlePrint = () => alert('Cetak (mock)')
   const handleDownload = () => alert('Download (mock)')
   
@@ -131,7 +130,6 @@ export default function DashboardOperator() {
           </div>
 
           <div className="header-actions">
-            <button className="btn-icon" aria-label="notifications">🔔</button>
             <button className="btn-primary" onClick={handleAdd}><FaPlus className="btn-icon-left" />Tambah Guru</button>
           </div>
         </header>
@@ -148,20 +146,11 @@ export default function DashboardOperator() {
           </article>
 
           <article className="card">
-            <div className="card-icon card-icon-purple"><FaExclamationCircle /></div>
-            <div className="card-body">
-              <div className="card-value">{SUMMARY.usulan.value}</div>
-              <div className="card-label">{SUMMARY.usulan.label}</div>
-              <div className="card-meta">{SUMMARY.usulan.meta}</div>
-            </div>
-          </article>
-
-          <article className="card">
             <div className="card-icon card-icon-purple"><FaCertificate /></div>
             <div className="card-body">
-              <div className="card-value">{SUMMARY.sertifikasi.value}</div>
-              <div className="card-label">{SUMMARY.sertifikasi.label}</div>
-              <div className="card-meta">{SUMMARY.sertifikasi.meta}</div>
+              <div className="card-value">{SUMMARY.mapel.value}</div>
+              <div className="card-label">{SUMMARY.mapel.label}</div>
+              <div className="card-meta">{SUMMARY.mapel.meta}</div>
             </div>
           </article>
 
