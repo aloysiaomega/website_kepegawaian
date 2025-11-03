@@ -244,14 +244,6 @@ export default function Mapel() {
                       </td>
                       <td className="mp-actions-cell">
                         <button 
-                          className="mp-action-btn mp-edit-btn" 
-                          aria-label="Edit mata pelajaran"
-                          onClick={() => handleEdit(mapel.id)}
-                          title="Edit Mapel"
-                        >
-                          <FaEdit />
-                        </button>
-                        <button 
                           className="mp-action-btn mp-delete-btn" 
                           aria-label="Hapus mata pelajaran"
                           onClick={() => handleDeleteClick(mapel)}
