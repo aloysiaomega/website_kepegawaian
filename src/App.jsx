@@ -10,6 +10,7 @@ import Dashboard from './pages/Operator/Dashboard/Dashboard.jsx';
 import DataGuruOperator from './pages/Operator/DataGuru/DataGuru.jsx';
 import EditGuru from './pages/Operator/DataGuru/EditGuru.jsx';
 import ViewGuru from './pages/Operator/DataGuru/ViewGuru.jsx';
+import Mapel from './pages/Operator/Mapel/Mapel.jsx';
 import Dokumen from './pages/Operator/Dokumen/DokumenDigital.jsx';
 import UploadDokumen from './pages/Operator/Dokumen/Tambah.jsx';
 import Usulan from './pages/Operator/PerubahanData/UsulPerubahanData.jsx';
@@ -58,6 +59,7 @@ export default function App() {
         <Route path="/operator/data-guru" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><DataGuruOperator /></ProtectedRoute>}/>
         <Route path="/operator/data-guru/view/:id" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><ViewGuru /></ProtectedRoute>}/>
         <Route path="/operator/data-guru/edit/:id" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><EditGuru /></ProtectedRoute>} />
+        <Route path="/operator/mata-pelajaran" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Mapel /></ProtectedRoute>} />
         <Route  path="/operator/dokumen" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Dokumen /></ProtectedRoute>}/>
         <Route path="/operator/dokumen/upload" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><UploadDokumen /></ProtectedRoute>}/>
         <Route path="/operator/usulan" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Usulan /></ProtectedRoute>}/>

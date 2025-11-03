@@ -8,7 +8,8 @@ import {
   FaChartLine,
   FaKey,
   FaSignOutAlt,
-  FaBars
+  FaBars,
+  FaBook
 } from 'react-icons/fa'
 import './Sidebar.css'
 
@@ -52,6 +53,12 @@ export default function Sidebar({ user, collapsed, onToggle }) {
             <NavLink to="/dataguru" className="menu-item">
               <FaChalkboardTeacher className="menu-icon" />
               <span className="menu-label">Data Guru Sekolah</span>
+            </NavLink>
+
+            {/* Tambahkan Menu Mata Pelajaran di sini */}
+            <NavLink to="/operator/mata-pelajaran" className="menu-item">
+              <FaBook className="menu-icon" />
+              <span className="menu-label">Mata Pelajaran</span>
             </NavLink>
 
             <NavLink to="/operator/dokumen" className="menu-item">
