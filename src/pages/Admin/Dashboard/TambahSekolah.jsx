@@ -76,23 +76,6 @@ export default function TambahSekolah() {
               <div className="ts-subtitle">Cabang Dinas Pendidikan Wilayah VII</div>
             </div>
           </div>
-
-          <div className="ts-header-actions">
-            <button 
-              className="ts-cancel-btn"
-              onClick={handleCancel}
-            >
-              <FaArrowLeft className="ts-cancel-icon" />
-              Kembali ke Dashboard
-            </button>
-            <button 
-              className="ts-save-btn"
-              onClick={handleSubmit}
-            >
-              <FaSave className="ts-save-icon" />
-              Simpan Data Sekolah
-            </button>
-          </div>
         </header>
 
         {/* Main Content */}

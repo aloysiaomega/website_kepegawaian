@@ -318,27 +318,30 @@
   color: var(--acd-text-color);
   margin: 0;
   padding-bottom: 12px;
-  border-bottom: 2px solid var(--acd-border-color);
 }
 
-/* Table Container */
+/* Table Container - Remove borders */
 .acd-table-container {
   overflow-x: auto;
   border-radius: var(--acd-border-radius);
   box-shadow: var(--acd-shadow);
   margin-bottom: 24px;
-  border: 1px solid var(--acd-border-color);
+  border: none;
 }
 
 .acd-performance-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: var(--acd-card-bg);
   min-width: 1000px;
+  border: none;
 }
 
 .acd-performance-table thead {
   background: linear-gradient(135deg, var(--acd-primary-color), var(--acd-secondary-color));
+  /* Remove border from header */
+  border: none;
 }
 
 .acd-performance-table th {
@@ -349,21 +352,26 @@
   color: white;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid var(--acd-border-color);
+  /* Remove border from header cells */
+  border: none;
 }
 
 .acd-performance-table td {
   padding: 16px 20px;
   font-size: 14px;
   vertical-align: middle;
+  border: none;
 }
 
+/* Remove alternating row background */
 .acd-performance-table tbody tr:nth-child(even) {
-  background-color: rgba(243, 244, 246, 0.5);
+  background-color: transparent;
 }
 
 .acd-performance-table tbody tr {
   transition: var(--acd-transition);
+  /* Remove borders from rows */
+  border: none;
 }
 
 .acd-performance-table tbody tr:hover {

@@ -51,14 +51,6 @@ export default function DashboardAdminCabdin() {
       color: '#3b82f6'
     },
     {
-      icon: <FaClock />,
-      title: 'Usulan Pending',
-      value: '2',
-      subtitle: 'Usulan',
-      detail: 'Menunggu Verifikasi',
-      color: '#f59e0b'
-    },
-    {
       icon: <FaUsers />,
       title: 'Total Guru',
       value: '2180',
