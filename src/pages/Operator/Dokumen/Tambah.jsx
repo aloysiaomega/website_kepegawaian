@@ -139,7 +139,7 @@ export default function UploadDokumen() {
 
   const handleCancel = () => {
     if (window.confirm('Apakah Anda yakin ingin membatalkan? Data yang sudah diisi akan hilang.')) {
-      navigate('/operator/dokumen-digital');
+      navigate('/operator/dokumen');
     }
   };
 
@@ -167,13 +167,6 @@ export default function UploadDokumen() {
               <h1>Upload Dokumen Digital</h1>
               <div className="ud-subtitle">SMK N 2 Sukoharjo</div>
             </div>
-          </div>
-
-          <div className="ud-header-actions">
-            <button className="ud-notification-btn" aria-label="Notifikasi">
-              🔔
-              <span className="ud-notification-dot" />
-            </button>
           </div>
         </header>
 

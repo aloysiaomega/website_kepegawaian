@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Sidebar from '../Sidebar/Sidebar';
 import GuruActions from './GuruActions'; // Import komponen GuruActions
 import {
@@ -78,6 +79,7 @@ const TEACHERS = [
 ]
 
 export default function DashboardOperator() {
+  const navigate = useNavigate(); // Deklarasi useNavigate
   const [collapsed, setCollapsed] = useState(false)
   const [selectedMapel, setSelectedMapel] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('all')
@@ -106,7 +108,12 @@ export default function DashboardOperator() {
   const pageItems = filtered.slice((page - 1) * perPage, page * perPage)
 
   const handleToggle = () => setCollapsed(s => !s)
-  const handleAdd = () => {navigate('/operator/data-guru/tambah-guru');};
+  
+  // Fungsi untuk navigasi ke halaman tambah guru
+  const handleAdd = () => {
+    navigate('/operator/data-guru/tambah-guru');
+  };
+  
   const handlePrint = () => alert('Cetak (mock)')
   const handleDownload = () => alert('Download (mock)')
   
@@ -130,36 +137,35 @@ export default function DashboardOperator() {
           </div>
 
           <div className="header-actions">
-            <button className="btn-primary" onClick={handleAdd}><FaPlus className="btn-icon-left" />Tambah Guru</button>
+            <button className="btn-primary" onClick={handleAdd}>
+              <FaPlus className="btn-icon-left" />
+              Tambah Guru
+            </button>
           </div>
         </header>
 
         <section className="summary-cards">
-          {/* ... (summary cards tetap sama) ... */}
           <article className="card">
             <div className="card-icon card-icon-purple"><FaUserFriends /></div>
             <div className="card-body">
-              <div className="card-value">{SUMMARY.totalGuru.value}</div>
               <div className="card-label">{SUMMARY.totalGuru.label}</div>
-              <div className="card-meta">{SUMMARY.totalGuru.meta}</div>
+              <div className="card-value">{SUMMARY.totalGuru.value}</div>
             </div>
           </article>
 
           <article className="card">
             <div className="card-icon card-icon-purple"><FaCertificate /></div>
             <div className="card-body">
-              <div className="card-value">{SUMMARY.mapel.value}</div>
               <div className="card-label">{SUMMARY.mapel.label}</div>
-              <div className="card-meta">{SUMMARY.mapel.meta}</div>
+              <div className="card-value">{SUMMARY.mapel.value}</div>
             </div>
           </article>
 
           <article className="card">
             <div className="card-icon card-icon-purple"><FaClock /></div>
             <div className="card-body">
-              <div className="card-value">{SUMMARY.akanPensiun.value}</div>
               <div className="card-label">{SUMMARY.akanPensiun.label}</div>
-              <div className="card-meta">{SUMMARY.akanPensiun.meta}</div>
+              <div className="card-value">{SUMMARY.akanPensiun.value}</div>
             </div>
           </article>
         </section>
@@ -262,15 +268,10 @@ export default function DashboardOperator() {
               <div className="qa-label">Tambah Guru</div>
             </button>
 
-            <button className="quick-btn" onClick={() => alert('Unggah dokumen (mock)')}>
-              <FaFileUpload className="qa-icon" />
-              <div className="qa-label">Unggah Dokumen</div>
-            </button>
-
-            {/* <button className="quick-btn" onClick={handlePrint}>
-              <FaPrint className="qa-icon" />
-              <div className="qa-label">Cetak Biodata</div>
-            </button> */}
+            <button className="quick-btn" onClick={() => navigate('/operator/dokumen/upload')}>
+              <FaFileUpload className="qa-icon"/>
+              <div className="qa-label">Upload Dokumen</div>
+              </button>
 
             <button className="quick-btn" onClick={() => alert('Lihat laporan (mock)')}>
               <FaFileAlt className="qa-icon" />
