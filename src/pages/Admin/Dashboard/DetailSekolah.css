@@ -150,8 +150,8 @@
   align-items: center;
   justify-content: center;
   padding: 12px 24px;
-  background: linear-gradient(135deg, var(--ts-success-color), #10b981);
-  color: white;
+  background: linear-gradient(135deg, rgba(255, 169, 242, 0.525), #ffe6a079);
+  color: black;
   border-radius: var(--ts-border-radius);
   font-weight: 700;
   font-size: 16px;
