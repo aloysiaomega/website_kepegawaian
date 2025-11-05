@@ -346,11 +346,11 @@ export default function DashboardAdminCabdin() {
                   </div>
                 </div>
                 
-                <div className="acd-quick-action-card">
+                <div className="acd-quick-action-card" onClick={handleDataGuru}>
                   <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
                     <FaUsers />
                   </div>
-                  <div className="acd-quick-action-content" onClick={handleDataGuru} style={{ cursor: 'pointer' }}>
+                  <div className="acd-quick-action-content" style={{ cursor: 'pointer' }}>
                     <h4>Data Guru</h4>
                     <p>Seluruh Wilayah</p>
                   </div>
