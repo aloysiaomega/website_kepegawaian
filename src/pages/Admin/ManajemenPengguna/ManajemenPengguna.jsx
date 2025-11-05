@@ -96,7 +96,7 @@ const ManajemenPengguna = () => {
   });
 
   const handleEditUser = (userId) => {
-    console.log("Edit user:", userId);
+    navigate(`/admin-cabdin/manajemen-pengguna/edit/${userId}`);
     // Navigate to edit page
   };
 
