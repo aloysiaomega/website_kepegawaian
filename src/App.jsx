@@ -26,6 +26,7 @@ import DataGuruAdmin from './pages/Admin/DataGuru/DataGuru.jsx';
 import DetailGuru from './pages/Admin/DataGuru/DetailGuru.jsx';
 import DokumenDigital from './pages/Admin/DokumenDigital/DokumenDigital.jsx'
 import ManajemenPengguna from './pages/Admin/ManajemenPengguna/ManajemenPengguna.jsx';
+import TambahPengguna from './pages/Admin/ManajemenPengguna/TambahPengguna.jsx';
 
 // Route Protection Component
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
@@ -76,6 +77,7 @@ export default function App() {
         <Route path="/admin-cabdin/data-guru/detail/:id" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DetailGuru /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/dokumen-digital" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DokumenDigital /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/manajemen-pengguna" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><ManajemenPengguna /></ProtectedRoute>}/>
+        <Route path="/admin-cabdin/manajemen-pengguna/tambah-pengguna" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><TambahPengguna /></ProtectedRoute>}/>
 
         {/* Shared Routes (Available for both roles) */}
         <Route  path="/ganti-password" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR, ROLES.ADMIN_CABDIN]}><GantiPassword /></ProtectedRoute>}/>

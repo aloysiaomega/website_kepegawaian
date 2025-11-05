@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ManajemenPengguna.css';
 import SidebarAdminCabdin from '../Sidebar/SidebarA';
-import { FaSearch, FaEdit, FaBell, FaFilter, FaRedo } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaPlus, FaFilter } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const ManajemenPengguna = () => {
@@ -11,6 +11,10 @@ const ManajemenPengguna = () => {
   const [selectedSekolah, setSelectedSekolah] = useState('Semua Sekolah');
   const [selectedStatus, setSelectedStatus] = useState('Semua Status');
   const navigate = useNavigate();
+  
+  const handleTambahPengguna = () => {
+    navigate('/admin-cabdin/manajemen-pengguna/tambah-pengguna');
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -170,7 +174,7 @@ const ManajemenPengguna = () => {
                   <input
                     type="text"
                     className="acd-search-input"
-                    placeholder="Cari berdasarkan nama, username, atau sekolah"
+                    placeholder="Cari nama, username, atau sekolah"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -183,7 +187,13 @@ const ManajemenPengguna = () => {
           <div className="acd-table-section">
             <div className="acd-table-header">
               <h3>Daftar Pengguna Operator Sekolah</h3>
-              <span className="acd-table-count">{filteredPengguna.length} pengguna ditemukan</span>
+              <div className="acd-filter-group acd-filter-action-group">
+                <button className="acd-primary-btn acd-add-operator-btn" onClick={handleTambahPengguna}>
+                  <FaPlus className="acd-add-icon" />
+                  <span className="acd-btn-text">Tambah Pengguna</span>
+                  <div className="acd-btn-shine"></div>
+                </button>
+              </div>
             </div>
 
             <div className="acd-table-container">
@@ -282,4 +292,4 @@ const ManajemenPengguna = () => {
   );
 };
 
-export default ManajemenPengguna;
+export default ManajemenPengguna;  
