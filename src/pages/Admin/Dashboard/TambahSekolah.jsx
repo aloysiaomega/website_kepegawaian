@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars, FaSave, FaArrowLeft, FaSchool, FaUser, FaMapMarkerAlt, FaAward, FaIdCard } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import SidebarAdminCabdin from '../Sidebar/SidebarA';
@@ -7,6 +7,8 @@ import './TambahSekolah.css';
 export default function TambahSekolah() {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ export default function TambahSekolah() {
     npsn: ''
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 1024;
       setIsMobile(mobile);
@@ -48,12 +50,35 @@ export default function TambahSekolah() {
     e.preventDefault();
     // Handle form submission here
     console.log('Form data:', formData);
-    alert('Data sekolah berhasil disimpan!');
-    navigate('/dashboard');
+    
+    // Tampilkan modal sukses
+    setShowSuccessModal(true);
+  };
+
+  const handleSuccessConfirm = () => {
+    setShowSuccessModal(false);
+    // Reset form
+    setFormData({
+      namaSekolah: '',
+      jenjang: 'SMK',
+      alamatSekolah: '',
+      namaKepalaSekolah: '',
+      akreditasi: 'A',
+      npsn: ''
+    });
   };
 
   const handleCancel = () => {
-    navigate('/dashboard');
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmCancel = () => {
+    setShowConfirmModal(false);
+    navigate('/admin-cabdin/dashboard');
+  };
+
+  const handleCancelDismiss = () => {
+    setShowConfirmModal(false);
   };
 
   return (
@@ -84,7 +109,7 @@ export default function TambahSekolah() {
 
             {/* Form Content */}
             <div className="ts-form-section">
-              <form className="ts-form">
+              <form className="ts-form" onSubmit={handleSubmit}>
                 <div className="ts-form-grid">
                   {/* Nama Sekolah */}
                   <div className="ts-form-card">
@@ -100,6 +125,7 @@ export default function TambahSekolah() {
                         onChange={handleInputChange}
                         className="ts-form-input"
                         placeholder="Masukkan nama sekolah lengkap"
+                        required
                       />
                     </div>
                   </div>
@@ -116,6 +142,7 @@ export default function TambahSekolah() {
                         value={formData.jenjang}
                         onChange={handleInputChange}
                         className="ts-form-select"
+                        required
                       >
                         <option value="SMK">Sekolah Menengah Kejuruan (SMK)</option>
                         <option value="SMA">Sekolah Menengah Atas (SMA)</option>
@@ -138,6 +165,7 @@ export default function TambahSekolah() {
                         className="ts-form-textarea"
                         placeholder="Masukkan alamat lengkap sekolah termasuk kecamatan, kota, dan provinsi"
                         rows="4"
+                        required
                       />
                     </div>
                   </div>
@@ -156,6 +184,7 @@ export default function TambahSekolah() {
                         onChange={handleInputChange}
                         className="ts-form-input"
                         placeholder="Masukkan nama lengkap kepala sekolah"
+                        required
                       />
                     </div>
                   </div>
@@ -172,6 +201,7 @@ export default function TambahSekolah() {
                         value={formData.akreditasi}
                         onChange={handleInputChange}
                         className="ts-form-select"
+                        required
                       >
                         <option value="A">A - Sangat Baik</option>
                         <option value="B">B - Baik</option>
@@ -196,6 +226,9 @@ export default function TambahSekolah() {
                         className="ts-form-input"
                         placeholder="Masukkan 8 digit NPSN"
                         maxLength="8"
+                        pattern="[0-9]{8}"
+                        title="NPSN harus berupa 8 digit angka"
+                        required
                       />
                     </div>
                   </div>
@@ -214,7 +247,6 @@ export default function TambahSekolah() {
                   <button 
                     type="submit"
                     className="ts-save-btn ts-form-save-btn"
-                    onClick={handleSubmit}
                   >
                     <FaSave className="ts-save-icon" />
                     Simpan Data Sekolah
@@ -246,6 +278,58 @@ export default function TambahSekolah() {
           </div>
         </div>
       </main>
+
+      {/* Custom Success Modal */}
+      {showSuccessModal && (
+        <div className="modal-overlay">
+          <div className="modal-container success-modal">
+            <div className="modal-icon">
+              <i className="fas fa-check-circle"></i>
+            </div>
+            <div className="modal-content">
+              <h3>Berhasil!</h3>
+              <p>Data sekolah berhasil disimpan. Form telah direset untuk input data baru.</p>
+            </div>
+            <div className="modal-actions">
+              <button 
+                className="btn-modal-primary" 
+                onClick={handleSuccessConfirm}
+              >
+                Oke
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Custom Confirm Modal */}
+      {showConfirmModal && (
+        <div className="modal-overlay">
+          <div className="modal-container confirm-modal">
+            <div className="modal-icon">
+              <i className="fas fa-exclamation-triangle"></i>
+            </div>
+            <div className="modal-content">
+              <h3>Konfirmasi Pembatalan</h3>
+              <p>Batalkan tambah sekolah? Data yang sudah diisi akan hilang.</p>
+            </div>
+            <div className="modal-actions">
+              <button 
+                className="btn-modal-secondary" 
+                onClick={handleCancelDismiss}
+              >
+                Lanjutkan
+              </button>
+              <button 
+                className="btn-modal-primary" 
+                onClick={handleConfirmCancel}
+              >
+                Ya, Batalkan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

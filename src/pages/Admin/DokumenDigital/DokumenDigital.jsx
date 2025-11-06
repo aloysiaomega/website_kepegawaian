@@ -127,13 +127,6 @@ const DokumenDigital = () => {
               <div className="acd-subtitle">Cabang Dinas Pendidikan Wilayah VII</div>
             </div>
           </div>
-
-          <div className="acd-header-actions">
-            <button className="acd-notification-btn" aria-label="Notifikasi">
-              🔔
-              <span className="acd-notification-dot" />
-            </button>
-          </div>
         </header>
 
         <div className="acd-content">
