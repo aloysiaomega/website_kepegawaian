@@ -262,6 +262,156 @@
   color: white;
 }
 
+/* Modal Styles - Konsisten dengan komponen lainnya */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-container {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  animation: slideUp 0.3s ease;
+  text-align: center;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+}
+
+.modal-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.info-modal .modal-icon {
+  color: var(--danger-color);
+}
+
+.success-modal .modal-icon {
+  color: var(--success-color);
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0 0 12px 0;
+}
+
+.modal-content p {
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.btn-modal-primary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 100px;
+}
+
+.btn-modal-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Modal */
+@media (max-width: 480px) {
+  .modal-container {
+    padding: 24px;
+    margin: 16px;
+  }
+  
+  .modal-icon {
+    font-size: 48px;
+  }
+  
+  .modal-content h3 {
+    font-size: 20px;
+  }
+  
+  .modal-content p {
+    font-size: 14px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .btn-modal-primary {
+    width: 100%;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .edit-guru-main {

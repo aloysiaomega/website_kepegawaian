@@ -1,13 +1,15 @@
 // src/pages/Operator/EditGuru/EditGuru.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaSave, FaTimes } from 'react-icons/fa';
+import { FaArrowLeft, FaSave, FaTimes, FaCheckCircle } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './EditGuru.css';
 
 export default function EditGuru() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', message: '' });
 
   // Data dummy - nanti bisa diganti dengan API call
   const initialData = {
@@ -32,7 +34,14 @@ export default function EditGuru() {
   };
 
   const [formData, setFormData] = useState(initialData[id] || initialData[1]);
-  const [selectedMapel, setSelectedMapel] = useState([]);
+  const [selectedMapel, setSelectedMapel] = useState(formData.mapel || []);
+
+  // Inisialisasi selectedMapel ketika formData berubah
+  useEffect(() => {
+    if (formData.mapel) {
+      setSelectedMapel(formData.mapel);
+    }
+  }, [formData.mapel]);
 
   const handleBack = () => {
     navigate('/dataguru');
@@ -57,10 +66,38 @@ export default function EditGuru() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validasi form
+    if (!formData.nama || !formData.nip || !formData.jenisKelamin || !formData.tempatLahir || 
+        !formData.tglLahir || !formData.alamat || !formData.email || !formData.telepon || 
+        !formData.status || !formData.jabatan || !formData.pendidikan || !formData.tglBergabung || 
+        !formData.sekolah || selectedMapel.length === 0) {
+      setModalContent({
+        title: 'Data Belum Lengkap',
+        message: 'Harap lengkapi semua field yang wajib diisi (ditandai dengan *).'
+      });
+      setShowModal(true);
+      return;
+    }
+
     // Simpan data yang diubah
-    console.log('Data yang disimpan:', { ...formData, mapel: selectedMapel });
-    alert('Data berhasil disimpan!');
-    navigate('/dataguru');
+    const updatedData = { ...formData, mapel: selectedMapel };
+    console.log('Data yang disimpan:', updatedData);
+    
+    // Tampilkan modal sukses
+    setModalContent({
+      title: 'Berhasil',
+      message: 'Data guru berhasil diperbarui!'
+    });
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    // Jika modal sukses ditutup, navigasi ke halaman data guru
+    if (modalContent.title === 'Berhasil') {
+      navigate('/dataguru');
+    }
   };
 
   const mapelOptions = ['Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'IPA', 'IPS', 'Seni Budaya', 'PJOK'];
@@ -308,6 +345,29 @@ export default function EditGuru() {
           </section>
         </form>
       </main>
+
+      {/* Modal Alert - Konsisten dengan komponen lainnya */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className={`modal-container ${modalContent.title === 'Berhasil' ? 'success-modal' : 'info-modal'}`}>
+            <button className="modal-close" onClick={handleModalClose}>
+              <FaTimes />
+            </button>
+            <div className="modal-icon">
+              {modalContent.title === 'Berhasil' ? <FaCheckCircle /> : <FaTimes />}
+            </div>
+            <div className="modal-content">
+              <h3>{modalContent.title}</h3>
+              <p>{modalContent.message}</p>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-modal-primary" onClick={handleModalClose}>
+                {modalContent.title === 'Berhasil' ? 'Oke' : 'Tutup'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

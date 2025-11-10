@@ -1,7 +1,7 @@
 // src/pages/Operator/DataGuru/DataGuru.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaSearch, FaEye, FaTrash, FaBars, FaEdit } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaTrash, FaBars, FaEdit, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './DataGuru.css';
 
@@ -285,6 +285,33 @@ export default function DataGuru() {
           </div>
         </div>
       </main>
+
+      {/* Modal Konfirmasi Hapus - Konsisten dengan Dashboard */}
+      {showDeleteModal && (
+        <div className="dg-modal-overlay">
+          <div className="dg-modal-container dg-delete-modal">
+            <button className="dg-modal-close" onClick={handleDeleteCancel}>
+              <FaTimes />
+            </button>
+            <div className="dg-modal-icon">
+              <FaExclamationTriangle />
+            </div>
+            <div className="dg-modal-content">
+              <h3>Konfirmasi Hapus Data Guru</h3>
+              <p>Apakah Anda yakin ingin menghapus data guru <strong>{guruToDelete?.nama}</strong>?</p>
+              <p className="dg-modal-warning">Data yang dihapus tidak dapat dikembalikan.</p>
+            </div>
+            <div className="dg-modal-actions">
+              <button className="dg-btn-modal-secondary" onClick={handleDeleteCancel}>
+                Batal
+              </button>
+              <button className="dg-btn-modal-danger" onClick={handleDeleteConfirm}>
+                Ya, Hapus Data
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

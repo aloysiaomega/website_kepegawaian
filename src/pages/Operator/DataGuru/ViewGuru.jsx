@@ -1,13 +1,15 @@
 // src/pages/Operator/ViewGuru/ViewGuru.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaPrint, FaDownload, FaEdit } from 'react-icons/fa';
+import { FaArrowLeft, FaPrint, FaDownload, FaEdit, FaTimes, FaExclamationCircle } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './ViewGuru.css';
 
 export default function ViewGuru() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', message: '' });
 
   // Data dummy - nanti bisa diganti dengan API call
   const guruData = {
@@ -77,15 +79,27 @@ export default function ViewGuru() {
   };
 
   const handleEdit = () => {
-    navigate(`/operator/edit-guru/${id}`);
+    navigate(`/operator/data-guru/edit/${id}`);
   };
 
   const handlePrint = () => {
-    window.print();
+    setModalContent({
+      title: 'Cetak Data',
+      message: 'Fitur cetak data guru sedang dalam pengembangan.'
+    });
+    setShowModal(true);
   };
 
   const handleDownload = () => {
-    alert('Fungsi download PDF akan diimplementasikan');
+    setModalContent({
+      title: 'Download PDF',
+      message: 'Fitur download PDF sedang dalam pengembangan.'
+    });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -227,6 +241,29 @@ export default function ViewGuru() {
           </section>
         </div>
       </main>
+
+      {/* Modal Alert - Konsisten dengan komponen lainnya */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-container info-modal">
+            <button className="modal-close" onClick={closeModal}>
+              <FaTimes />
+            </button>
+            <div className="modal-icon">
+              <FaExclamationCircle />
+            </div>
+            <div className="modal-content">
+              <h3>{modalContent.title}</h3>
+              <p>{modalContent.message}</p>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-modal-primary" onClick={closeModal}>
+                Oke
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
