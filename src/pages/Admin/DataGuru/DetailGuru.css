@@ -256,6 +256,133 @@
   box-shadow: var(--ts-shadow);
 }
 
+/* Tombol Unduh PDF */
+.ts-download-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--ts-success-color), #10b981);
+  color: white;
+  border: none;
+  border-radius: var(--ts-border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--ts-transition);
+  box-shadow: var(--ts-shadow);
+}
+
+.ts-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ts-shadow-lg);
+  background: linear-gradient(135deg, #0da271, var(--ts-success-color));
+}
+
+/* Download Actions Section */
+.ts-download-actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid var(--ts-border-color);
+  text-align: center;
+}
+
+.ts-download-pdf-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--ts-primary-color), var(--ts-secondary-color));
+  color: white;
+  border: none;
+  border-radius: var(--ts-border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--ts-transition);
+  width: 100%;
+  box-shadow: var(--ts-shadow);
+}
+
+.ts-download-pdf-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ts-shadow-lg);
+  background: linear-gradient(135deg, var(--ts-primary-light), var(--ts-secondary-color));
+}
+
+/* Responsive Design untuk Tombol Baru */
+@media (max-width: 768px) {
+  .ts-detail-guru-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .ts-print-btn,
+  .ts-download-btn {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .ts-download-pdf-btn {
+    width: 100%;
+  }
+}
+
+/* Print Styles untuk PDF */
+@media print {
+  .ts-detail-guru-header,
+  .ts-detail-guru-actions,
+  .ts-download-actions,
+  .sidebar {
+    display: none !important;
+  }
+  
+  .ts-main {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .ts-detail-guru-container {
+    box-shadow: none;
+    border: none;
+    padding: 20px;
+  }
+  
+  .ts-info-section {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .ts-guru-name {
+    font-size: 24px;
+    color: #000;
+  }
+  
+  .ts-info-value {
+    color: #000;
+  }
+}
+
+/* Animasi untuk tombol baru */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.ts-download-btn:focus {
+  animation: pulse 1.5s infinite;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .ts-detail-guru-content {

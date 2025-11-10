@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
-import GuruActions from './GuruActions'; // Import komponen GuruActions
 import {
   FaUserFriends,
   FaExclamationCircle,
@@ -13,7 +12,23 @@ import {
   FaFileUpload,
   FaFileAlt,
   FaUserPlus,
-  FaCheckCircle
+  FaCheckCircle,
+  FaTimes,
+  FaExclamationTriangle,
+  FaEye,
+  FaTrash,
+  FaUser,
+  FaCalendar,
+  FaMapMarkerAlt,
+  FaVenusMars,
+  FaEnvelope,
+  FaPhone,
+  FaGraduationCap,
+  FaSchool,
+  FaChalkboardTeacher,
+  FaIdCard,
+  FaBriefcase,
+  FaHistory
 } from 'react-icons/fa'
 import './Dashboard.css'
 
@@ -23,7 +38,6 @@ const SUMMARY = {
   akanPensiun: { label: 'Guru Akan Pensiun', value: '3 Guru', meta: '2 PNS, 1 P3K' }
 }
 
-// Data guru yang diperbarui dengan field tambahan untuk GuruActions
 const TEACHERS = [
   { 
     id: 1, 
@@ -40,7 +54,7 @@ const TEACHERS = [
     email: 'ahmad.darmawan@sekolah.example',
     telepon: '081234567890',
     pendidikan: 'S1 Pendidikan Matematika',
-    sekolah: 'SMK N 2 Sukoharjo'
+    sekolah: 'SMK N 2 Sukoharjo',
   },
   { 
     id: 2, 
@@ -78,13 +92,100 @@ const TEACHERS = [
   }
 ]
 
+// Data guru pensiun
+const PENSION_TEACHERS = [
+  { 
+    id: 1, 
+    nama: 'Drs. Sutrisno, M.Pd', 
+    nip: '196701201988073002', 
+    mapel: ['Matematika', 'Fisika'], 
+    jam: '18 Jam', 
+    status: 'PNS', 
+    alamat: 'Jl. Veteran No. 45, Sukoharjo',
+    jenisKelamin: 'Laki-laki',
+    tglPensiun: '2026-10-12',
+    tglBergabung: '1988-07-01',
+    ttl: 'Sukoharjo, 20 Januari 1967',
+    email: 'sutrisno@sekolah.example',
+    telepon: '081234567893',
+    pendidikan: 'S2 Pendidikan Matematika',
+    sekolah: 'SMK N 2 Sukoharjo'
+  },
+  { 
+    id: 2, 
+    nama: 'Dra. Endang Sulastri, M.Pd', 
+    nip: '196703241988032003', 
+    mapel: ['Bahasa Indonesia', 'Sastra'], 
+    jam: '20 Jam', 
+    status: 'PNS', 
+    alamat: 'Jl. Merdeka No. 12, Sukoharjo',
+    jenisKelamin: 'Perempuan',
+    tglPensiun: '2026-10-12',
+    tglBergabung: '1988-03-01',
+    ttl: 'Sukoharjo, 24 Maret 1967',
+    email: 'endang@sekolah.example',
+    telepon: '081234567894',
+    pendidikan: 'S2 Pendidikan Bahasa Indonesia',
+    sekolah: 'SMK N 2 Sukoharjo'
+  },
+  { 
+    id: 3, 
+    nama: 'Drs. Bambang Hermawan', 
+    nip: '196704101988031002', 
+    mapel: ['Sejarah', 'PPKn'], 
+    jam: '22 Jam', 
+    status: 'PNS', 
+    alamat: 'Jl. Diponegoro No. 78, Sukoharjo',
+    jenisKelamin: 'Laki-laki',
+    tglPensiun: '2026-10-12',
+    tglBergabung: '1988-03-01',
+    ttl: 'Sukoharjo, 10 April 1967',
+    email: 'bambang@sekolah.example',
+    telepon: '081234567895',
+    pendidikan: 'S1 Pendidikan Sejarah',
+    sekolah: 'SMK N 2 Sukoharjo'
+  }
+]
+
+// Komponen GuruActions yang disederhanakan tanpa modal konfirmasi
+const GuruActions = ({ guru, onDelete, onView, showDelete = true }) => {
+  return (
+    <div className="actions-inline">
+      <button 
+        className="action-btn view" 
+        title="Lihat Detail"
+        onClick={() => onView(guru)}
+      >
+        <FaEye />
+      </button>
+      {showDelete && (
+        <button 
+          className="action-btn danger" 
+          title="Hapus Data"
+          onClick={() => onDelete(guru)}
+        >
+          <FaTrash />
+        </button>
+      )}
+    </div>
+  );
+};
+
 export default function DashboardOperator() {
-  const navigate = useNavigate(); // Deklarasi useNavigate
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false)
   const [selectedMapel, setSelectedMapel] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
+  const [showModal, setShowModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDetailModal, setShowDetailModal] = useState(false)
+  const [showPensiunDetailModal, setShowPensiunDetailModal] = useState(false)
+  const [modalContent, setModalContent] = useState({ title: '', message: '' })
+  const [guruToDelete, setGuruToDelete] = useState(null)
+  const [guruToView, setGuruToView] = useState(null)
+  const [guruPensiunToView, setGuruPensiunToView] = useState(null)
   const perPage = 8
 
   const mapelOptions = useMemo(() => {
@@ -109,21 +210,281 @@ export default function DashboardOperator() {
 
   const handleToggle = () => setCollapsed(s => !s)
   
+  // Fungsi untuk menampilkan modal info
+  const showAlert = (title, message) => {
+    setModalContent({ title, message })
+    setShowModal(true)
+  }
+
+  // Fungsi untuk menampilkan modal konfirmasi hapus
+  const showDeleteConfirmation = (guru) => {
+    setGuruToDelete(guru)
+    setShowDeleteModal(true)
+  }
+
+  // Fungsi untuk menampilkan modal detail guru
+  const showDetailGuru = (guru) => {
+    setGuruToView(guru)
+    setShowDetailModal(true)
+  }
+
+  // Fungsi untuk menampilkan modal detail guru pensiun
+  const showDetailPensiun = (guru) => {
+    setGuruPensiunToView(guru)
+    setShowPensiunDetailModal(true)
+  }
+
+  // Fungsi untuk menutup modal
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false)
+    setGuruToDelete(null)
+  }
+
+  const closeDetailModal = () => {
+    setShowDetailModal(false)
+    setGuruToView(null)
+  }
+
+  const closePensiunDetailModal = () => {
+    setShowPensiunDetailModal(false)
+    setGuruPensiunToView(null)
+  }
+
   // Fungsi untuk navigasi ke halaman tambah guru
   const handleAdd = () => {
     navigate('/operator/data-guru/tambah-guru');
   };
   
-  const handlePrint = () => alert('Cetak (mock)')
-  const handleDownload = () => alert('Download (mock)')
+  const handlePrint = () => showAlert('Cetak Data', 'Fitur cetak data guru sedang dalam pengembangan.')
+  const handleDownload = () => showAlert('Download Data', 'Fitur download data guru sedang dalam pengembangan.')
   
   // Fungsi untuk menangani pensiun guru (bukan delete)
   const handlePensiun = (id) => {
-    // Di sini Anda bisa implementasi logika untuk menandai guru sebagai pensiun
-    // Misalnya: update status guru di database
-    alert(`Guru dengan id=${id} akan diproses untuk pensiun (mock)`);
+    showAlert('Proses Pensiun', `Guru dengan ID ${id} berhasil diproses untuk pensiun.`)
     console.log(`Proses pensiun untuk guru id: ${id}`);
+    closeDeleteModal()
   }
+
+  // Fungsi untuk konfirmasi hapus
+  const confirmDelete = () => {
+    if (guruToDelete) {
+      handlePensiun(guruToDelete.id)
+    }
+  }
+
+  // Fungsi untuk quick actions
+  const handleQuickAction = (action) => {
+    switch(action) {
+      case 'lihat-semua-pensiun':
+        showAlert('Guru Akan Pensiun', 'Fitur lihat semua guru akan pensiun sedang dalam pengembangan.')
+        break
+      case 'lihat-semua-aktivitas':
+        showAlert('Aktivitas', 'Fitur lihat semua aktivitas sedang dalam pengembangan.')
+        break
+      default:
+        showAlert('Info', 'Fitur sedang dalam pengembangan.')
+    }
+  }
+
+  // Fungsi untuk handle print biodata
+  const handlePrintBiodata = () => {
+    showAlert('Cetak Biodata', 'Fitur cetak biodata sedang dalam pengembangan.')
+  }
+
+  // Fungsi untuk handle download PDF
+  const handleDownloadPDF = () => {
+    showAlert('Unduh PDF', 'Fitur unduh PDF sedang dalam pengembangan.')
+  }
+
+  // Komponen Modal Detail Guru
+  const DetailGuruModal = ({ guru, onClose, isPensiun = false }) => {
+    if (!guru) return null;
+
+    return (
+      <div className="modal-overlay">
+        <div className="modal-container detail-modal">
+          <button className="modal-close" onClick={onClose}>
+            <FaTimes />
+          </button>
+          
+          <div className="detail-modal-header">
+            <div className="modal-icon">
+              <FaUser />
+            </div>
+            <h3>Detail Guru {isPensiun && '(Akan Pensiun)'}</h3>
+          </div>
+          
+          <div className="detail-modal-content">
+            <div className="detail-grid">
+              <div className="detail-section">
+                <h4 className="detail-section-title">Informasi Pribadi</h4>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaUser className="detail-icon" />
+                    Nama Lengkap
+                  </div>
+                  <div className="detail-value">{guru.nama}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaIdCard className="detail-icon" />
+                    NIP
+                  </div>
+                  <div className="detail-value">{guru.nip}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaMapMarkerAlt className="detail-icon" />
+                    Tempat Tanggal Lahir
+                  </div>
+                  <div className="detail-value">{guru.ttl}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaVenusMars className="detail-icon" />
+                    Jenis Kelamin
+                  </div>
+                  <div className="detail-value">{guru.jenisKelamin}</div>
+                </div>
+              </div>
+              
+              <div className="detail-section">
+                <h4 className="detail-section-title">Informasi Kepegawaian</h4>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaBriefcase className="detail-icon" />
+                    Status Kepegawaian
+                  </div>
+                  <div className="detail-value">{guru.status}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaCalendar className="detail-icon" />
+                    Tanggal Bergabung
+                  </div>
+                  <div className="detail-value">
+                    {new Date(guru.tglBergabung).toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    })}
+                  </div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaCalendar className="detail-icon" />
+                    Tanggal Pensiun
+                  </div>
+                  <div className="detail-value">
+                    {new Date(guru.tglPensiun).toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    })}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="detail-section">
+                <h4 className="detail-section-title">Informasi Kontak & Mengajar</h4>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaMapMarkerAlt className="detail-icon" />
+                    Alamat
+                  </div>
+                  <div className="detail-value">{guru.alamat}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaPhone className="detail-icon" />
+                    Telepon
+                  </div>
+                  <div className="detail-value">{guru.telepon}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaEnvelope className="detail-icon" />
+                    E-mail
+                  </div>
+                  <div className="detail-value">{guru.email}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaChalkboardTeacher className="detail-icon" />
+                    Jam Mengajar
+                  </div>
+                  <div className="detail-value">{guru.jam}</div>
+                </div>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaSchool className="detail-icon" />
+                    Unit / Sekolah
+                  </div>
+                  <div className="detail-value">{guru.sekolah}</div>
+                </div>
+              </div>
+
+              <div className="detail-section">
+                <h4 className="detail-section-title">Informasi Pendidikan & Mata Pelajaran</h4>
+                
+                <div className="detail-item">
+                  <div className="detail-label">
+                    <FaGraduationCap className="detail-icon" />
+                    Pendidikan Terakhir
+                  </div>
+                  <div className="detail-value">{guru.pendidikan}</div>
+                </div>
+                
+                <div className="detail-item full-width">
+                  <div className="detail-label">
+                    <FaChalkboardTeacher className="detail-icon" />
+                    Mata Pelajaran yang Diampu
+                  </div>
+                  <div className="detail-value">
+                    <div className="mapel-list">
+                      {guru.mapel.map((m, index) => (
+                        <span key={index} className="mapel-badge">{m}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="detail-modal-actions">
+            <button className="btn-modal-secondary" onClick={onClose}>
+              Tutup
+            </button>
+            <button className="btn-modal-primary" onClick={handlePrintBiodata}>
+              <FaPrint className="btn-icon-left" />
+              Cetak Biodata
+            </button>
+            <button className="btn-modal-primary" onClick={handleDownloadPDF}>
+              <FaDownload className="btn-icon-left" />
+              Unduh PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="app-layout">
@@ -239,10 +600,10 @@ export default function DashboardOperator() {
                   <td>{t.alamat}</td>
                   
                   <td className="actions-cell">
-                    {/* Gunakan GuruActions untuk view dan pensiun */}
                     <GuruActions 
                       guru={t} 
-                      onDelete={handlePensiun} 
+                      onDelete={showDeleteConfirmation}
+                      onView={showDetailGuru}
                       showDelete={true}
                     />
                   </td>
@@ -272,11 +633,6 @@ export default function DashboardOperator() {
               <FaFileUpload className="qa-icon"/>
               <div className="qa-label">Upload Dokumen</div>
               </button>
-
-            <button className="quick-btn" onClick={() => alert('Lihat laporan (mock)')}>
-              <FaFileAlt className="qa-icon" />
-              <div className="qa-label">Usul Perubahan Data</div>
-            </button>
           </div>
 
           {/* Retirement Section */}
@@ -284,11 +640,11 @@ export default function DashboardOperator() {
             <div className="retirement-panel">
               <div className="retirement-header">
                 <h3>Guru Akan Pensiun (3 Tahun)</h3>
-                <button className="link-btn" onClick={() => alert('Lihat semua (mock)')}>Lihat Semua</button>
+                <button className="link-btn" onClick={() => handleQuickAction('lihat-semua-pensiun')}>Lihat Semua</button>
               </div>
 
-              <div className="retirement-table-wrap">
-                <table className="retirement-table">
+              <div className="table-wrap">
+                <table className="data-table">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -300,68 +656,25 @@ export default function DashboardOperator() {
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      { 
-                        id:1, 
-                        nama:'Drs. Sutrisno, M.Pd', 
-                        nip:'196701201988073002', 
-                        jab:'Guru Senior', 
-                        tgl:'12/10/2026',
-                        tglPensiun: '2026-10-12',
-                        status: 'PNS',
-                        jenisKelamin: 'Laki-laki',
-                        tglBergabung: '1988-07-01',
-                        ttl: 'Sukoharjo, 20 Januari 1967',
-                        email: 'sutrisno@sekolah.example',
-                        telepon: '081234567893',
-                        pendidikan: 'S2 Pendidikan',
-                        sekolah: 'SMK N 2 Sukoharjo'
-                      },
-                      { 
-                        id:2, 
-                        nama:'Dra. Endang Sulastri, M.Pd', 
-                        nip:'196703241988032003', 
-                        jab:'Guru Ahli Muda', 
-                        tgl:'12/10/2026',
-                        tglPensiun: '2026-10-12',
-                        status: 'PNS',
-                        jenisKelamin: 'Perempuan',
-                        tglBergabug: '1988-03-01',
-                        ttl: 'Sukoharjo, 24 Maret 1967',
-                        email: 'endang@sekolah.example',
-                        telepon: '081234567894',
-                        pendidikan: 'S2 Pendidikan',
-                        sekolah: 'SMK N 2 Sukoharjo'
-                      },
-                      { 
-                        id:3, 
-                        nama:'Drs. Bambang Hermawan', 
-                        nip:'196704101988031002', 
-                        jab:'Wakil Kepala Sekolah', 
-                        tgl:'12/10/2026',
-                        tglPensiun: '2026-10-12',
-                        status: 'PNS',
-                        jenisKelamin: 'Laki-laki',
-                        tglBergabung: '1988-03-01',
-                        ttl: 'Sukoharjo, 10 April 1967',
-                        email: 'bambang@sekolah.example',
-                        telepon: '081234567895',
-                        pendidikan: 'S1 Pendidikan',
-                        sekolah: 'SMK N 2 Sukoharjo'
-                      }
-                    ].map((r, i) => (
+                    {PENSION_TEACHERS.map((r, i) => (
                       <tr key={r.id}>
                         <td>{i + 1}</td>
                         <td className="ret-name">{r.nama}</td>
                         <td className="ret-nip">{r.nip}</td>
-                        <td>{r.jab}</td>
-                        <td>{r.tgl}</td>
+                        <td>{r.jabatan}</td>
+                        <td>
+                          {new Date(r.tglPensiun).toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                          })}
+                        </td>
                         <td className="actions-cell">
-                          {/* Untuk guru pensiun, kita sembunyikan tombol delete */}
                           <GuruActions 
                             guru={r} 
-                            onDelete={handlePensiun}
-                            showDelete={false} // Tidak tampilkan delete untuk guru pensiun
+                            onDelete={showDeleteConfirmation}
+                            onView={showDetailPensiun}
+                            showDelete={false}
                           />
                         </td>
                       </tr>
@@ -376,7 +689,7 @@ export default function DashboardOperator() {
           <section className="activities-panel">
             <div className="activities-header">
               <h3>Aktivitas terbaru</h3>
-              <button className="link-btn" onClick={() => alert('Lihat semua (mock)')}>Lihat Semua</button>
+              <button className="link-btn" onClick={() => handleQuickAction('lihat-semua-aktivitas')}>Lihat Semua</button>
             </div>
 
             <div className="activities-list">
@@ -400,6 +713,74 @@ export default function DashboardOperator() {
           </section>
         </section>
       </main>
+
+      {/* Custom Modal untuk Info */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-container info-modal">
+            <button className="modal-close" onClick={closeModal}>
+              <FaTimes />
+            </button>
+            <div className="modal-icon">
+              <FaExclamationCircle />
+            </div>
+            <div className="modal-content">
+              <h3>{modalContent.title}</h3>
+              <p>{modalContent.message}</p>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-modal-primary" onClick={closeModal}>
+                Oke
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Konfirmasi Hapus */}
+      {showDeleteModal && (
+        <div className="modal-overlay">
+          <div className="modal-container delete-modal">
+            <button className="modal-close" onClick={closeDeleteModal}>
+              <FaTimes />
+            </button>
+            <div className="modal-icon">
+              <FaExclamationTriangle />
+            </div>
+            <div className="modal-content">
+              <h3>Konfirmasi Proses Pensiun</h3>
+              <p>Apakah Anda yakin ingin memproses pensiun untuk guru <strong>{guruToDelete?.nama}</strong>?</p>
+              <p className="modal-warning">Tindakan ini tidak dapat dibatalkan.</p>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-modal-secondary" onClick={closeDeleteModal}>
+                Batal
+              </button>
+              <button className="btn-modal-danger" onClick={confirmDelete}>
+                Ya, Proses Pensiun
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Detail Guru Biasa */}
+      {showDetailModal && (
+        <DetailGuruModal 
+          guru={guruToView} 
+          onClose={closeDetailModal}
+          isPensiun={false}
+        />
+      )}
+
+      {/* Modal Detail Guru Pensiun */}
+      {showPensiunDetailModal && (
+        <DetailGuruModal 
+          guru={guruPensiunToView} 
+          onClose={closePensiunDetailModal}
+          isPensiun={true}
+        />
+      )}
     </div>
   )
 }

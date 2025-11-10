@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './DetailGuru.css';
 import SidebarAdminCabdin from '../Sidebar/SidebarA';
-import { FaEdit, FaPrint, FaEnvelope, FaPhone, FaSchool, FaBook, FaUser, FaCalendarAlt, FaMapMarkerAlt, FaGraduationCap } from 'react-icons/fa';
+import { FaEdit, FaPrint, FaEnvelope, FaPhone, FaSchool, FaBook, FaUser, FaCalendarAlt, FaMapMarkerAlt, FaGraduationCap, FaDownload } from 'react-icons/fa';
 
 const DetailGuru = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -29,6 +29,28 @@ const DetailGuru = () => {
     masaPensiun: "2 Bulan"
   };
 
+  const handlePrint = () => {
+    // Logika untuk cetak biodata
+    console.log("Cetak biodata guru:", guruData);
+    window.print();
+  };
+
+  const handleDownloadPDF = () => {
+    // Logika untuk unduh PDF
+    console.log("Unduh PDF biodata guru:", guruData);
+    
+    // Simulasi download PDF
+    const link = document.createElement('a');
+    link.href = '#'; // Ganti dengan URL PDF yang sebenarnya
+    link.download = `biodata-${guruData.nama.replace(/\s+/g, '-').toLowerCase()}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Tampilkan pesan sukses
+    alert(`Biodata ${guruData.nama} berhasil diunduh dalam format PDF`);
+  };
+
   return (
     <div className="ts-app">
       {/* Sidebar */}
@@ -50,14 +72,14 @@ const DetailGuru = () => {
               </div>
             </div>
             <div className="ts-detail-guru-actions">
-              <button className="ts-print-btn">
+              <button className="ts-print-btn" onClick={handlePrint}>
                 <FaPrint className="ts-action-icon" />
                 Cetak Biodata
               </button>
-              {/* <button className="ts-edit-btn">
-                <FaEdit className="ts-action-icon" />
-                Edit Data
-              </button> */}
+              <button className="ts-download-btn" onClick={handleDownloadPDF}>
+                <FaDownload className="ts-action-icon" />
+                Unduh PDF
+              </button>
             </div>
           </div>
 
@@ -169,7 +191,7 @@ const DetailGuru = () => {
               <div className="ts-info-section">
                 <div className="ts-section-header">
                   <FaPrint className="ts-section-icon" />
-                  <h3>Cetak Biodata</h3>
+                  <h3>Cetak & Unduh Biodata</h3>
                 </div>
                 <div className="ts-info-card">
                   <div className="ts-info-grid">
@@ -205,6 +227,14 @@ const DetailGuru = () => {
                   <div className="ts-pensiun-section">
                     <div className="ts-pensiun-label">Masa Pensiun</div>
                     <div className="ts-pensiun-badge">{guruData.masaPensiun}</div>
+                  </div>
+
+                  {/* Download Actions */}
+                  <div className="ts-download-actions">
+                    <button className="ts-download-pdf-btn" onClick={handleDownloadPDF}>
+                      <FaDownload className="ts-action-icon" />
+                      Unduh PDF Biodata
+                    </button>
                   </div>
                 </div>
               </div>
