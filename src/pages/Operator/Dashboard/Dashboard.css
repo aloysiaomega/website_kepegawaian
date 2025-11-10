@@ -940,8 +940,8 @@ body {
 
 /* Modal Detail Guru - SCROLLABLE */
 .detail-modal .modal-container {
-  /* max-width: 900px;
-  max-height: 85vh; */
+  max-width: 900px;
+  max-height: 85vh; 
   width: 600px;
   height: 100px;
   display: flex;

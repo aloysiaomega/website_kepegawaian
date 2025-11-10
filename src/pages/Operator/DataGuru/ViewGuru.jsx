@@ -75,7 +75,7 @@ export default function ViewGuru() {
   const guru = guruData[id] || guruData[1];
 
   const handleBack = () => {
-    navigate('/dataguru');
+    navigate(-1);
   };
 
   const handleEdit = () => {
@@ -115,7 +115,7 @@ export default function ViewGuru() {
               onClick={handleBack}
             >
               <FaArrowLeft />
-              <span>Kembali ke Data Guru</span>
+              <span>Kembali</span>
             </button>
             
             <div className="view-guru-title-section">
