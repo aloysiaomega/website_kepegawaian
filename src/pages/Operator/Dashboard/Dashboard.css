@@ -546,45 +546,6 @@ body {
   width: 100%;
 }
 
-.quick-actions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 0;
-}
-
-.quick-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 20px 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: var(--transition);
-  text-align: center;
-  height: 100%;
-}
-
-.quick-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-color);
-}
-
-.qa-icon {
-  font-size: 24px;
-  color: var(--primary-color);
-}
-
-.qa-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
 /* Retirement Section - Diperbaiki layoutnya */
 .retirement-section {
   width: 100%;
@@ -701,94 +662,6 @@ body {
 
 .ret-action {
   text-align: left;
-}
-
-/* Activities Panel - Diperbaiki layoutnya */
-.activities-panel {
-  width: 100%;
-  background: var(--card-bg);
-  padding: 24px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-}
-
-.activities-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.activities-header h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-color);
-  margin: 0;
-}
-
-.activities-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex: 1;
-}
-
-.activity-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-}
-
-.activity-item:hover {
-  background: rgba(59, 130, 246, 0.05);
-}
-
-.activity-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.activity-icon-red {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--danger-color);
-}
-
-.activity-icon-blue {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--primary-color);
-}
-
-.activity-icon-green {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success-color);
-}
-
-.activity-body {
-  flex: 1;
-}
-
-.activity-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-color);
-  margin-bottom: 2px;
-}
-
-.activity-time {
-  font-size: 12px;
-  color: var(--text-muted);
 }
 
 /* Custom Modal Styles - DIPERBAIKI */
@@ -1327,11 +1200,6 @@ body {
     width: 100%;
   }
 }
-
-/* Enhanced quick actions hover effect */
-.quick-btn:hover .qa-icon {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
 }
 
 /* Improved table actions */
@@ -1344,7 +1212,7 @@ body {
 }
 
 /* Enhanced button transitions */
-.btn-primary, .btn-ghost, .quick-btn, .page-btn, .page-num {
+.btn-primary, .btn-ghost, .page-btn, .page-num {
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.2, 1);
 }
 
@@ -1433,10 +1301,6 @@ body {
   .pagination {
     flex-wrap: wrap;
   }
-  
-  .quick-actions {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 480px) {
@@ -1462,10 +1326,6 @@ body {
   
   .btn-primary {
     padding: 12px;
-  }
-  
-  .quick-actions {
-    grid-template-columns: 1fr;
   }
   
   .activities-panel,
@@ -1517,5 +1377,4 @@ body {
 .table-wrap::-webkit-scrollbar-thumb:hover,
 .retirement-table-wrap::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
-}
 }

@@ -5,6 +5,7 @@
   gap: 28px;
   width: 100%;
   height: 100%;
+  min-height: 0; /* Penting untuk flex scrolling */
 }
 
 .ts-detail-header {
@@ -17,6 +18,7 @@
   box-shadow: var(--ts-shadow);
   border: 1px solid var(--ts-border-color);
   margin-bottom: 8px;
+  flex-shrink: 0; /* Mencegah header menyusut */
 }
 
 .ts-detail-title-section {
@@ -50,7 +52,7 @@
   margin: 0;
 }
 
-/* Detail Content */
+/* Detail Content - DITAMBAHKAN SCROLL */
 .ts-detail-content {
   background: var(--ts-card-bg);
   border-radius: var(--ts-border-radius);
@@ -58,6 +60,38 @@
   border: 1px solid var(--ts-border-color);
   overflow: hidden;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Penting untuk flex scrolling */
+}
+
+/* Container untuk konten yang bisa di-scroll */
+.ts-detail-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 200px); /* Sesuaikan dengan kebutuhan */
+  padding: 0; /* Hapus padding dari sini */
+}
+
+/* Scrollbar styling untuk konsistensi */
+.ts-detail-scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ts-detail-scrollable::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+  margin: 4px;
+}
+
+.ts-detail-scrollable::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.ts-detail-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .ts-detail-item {
@@ -68,6 +102,7 @@
   transition: var(--ts-transition);
   min-height: 88px;
   gap: 24px;
+  flex-shrink: 0; /* Mencegah item menyusut */
 }
 
 .ts-detail-item:hover {
@@ -106,6 +141,8 @@
   font-size: 15px;
   line-height: 1.6;
   min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Jenjang Options */
@@ -172,6 +209,10 @@
   .ts-detail-label {
     flex: 0 0 280px;
   }
+  
+  .ts-detail-scrollable {
+    max-height: calc(100vh - 180px);
+  }
 }
 
 @media (max-width: 1024px) {
@@ -187,6 +228,10 @@
   
   .ts-detail-value {
     font-size: 14px;
+  }
+  
+  .ts-detail-scrollable {
+    max-height: calc(100vh - 160px);
   }
 }
 
@@ -234,6 +279,10 @@
   .ts-detail-title-section h1 {
     font-size: 22px;
   }
+  
+  .ts-detail-scrollable {
+    max-height: calc(100vh - 140px);
+  }
 }
 
 @media (max-width: 640px) {
@@ -264,6 +313,15 @@
     width: 36px;
     height: 36px;
   }
+  
+  .ts-detail-scrollable {
+    max-height: calc(100vh - 120px);
+  }
+  
+  /* Scrollbar lebih kecil di mobile */
+  .ts-detail-scrollable::-webkit-scrollbar {
+    width: 6px;
+  }
 }
 
 /* Animation */
@@ -288,3 +346,15 @@
 .ts-detail-item:nth-child(4) { animation-delay: 0.4s; }
 .ts-detail-item:nth-child(5) { animation-delay: 0.5s; }
 .ts-detail-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Smooth scrolling untuk pengalaman yang lebih baik */
+.ts-detail-scrollable {
+  scroll-behavior: smooth;
+}
+
+@supports (scrollbar-width: thin) {
+  .ts-detail-scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+  }
+}

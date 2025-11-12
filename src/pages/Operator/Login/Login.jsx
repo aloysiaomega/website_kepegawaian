@@ -139,14 +139,14 @@ export default function LoginPage() {
                   aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
                   disabled={loading}
                 >
-                  {showPassword ? "🙈" : "👁️"}
+                  {showPassword ? "🤐" : "👁️"}
                 </button>
               </div>
             </div>
 
             <div className="form-options">
               <label className="remember">
-                <input type="checkbox" disabled={loading} /> Ingatkan saya
+                <input type="checkbox" disabled={loading} /> Ingat saya
               </label>
             </div>
 
@@ -165,13 +165,6 @@ export default function LoginPage() {
               )}
             </button>
           </form>
-
-          {/* Info login untuk testing */}
-          {/* <div className="login-hint">
-            <p><strong>Testing Credentials:</strong></p>
-            <p>Admin: username: <code>admin</code>, password: <code>admin123</code></p>
-            <p>Operator: username: <code>operator</code>, password: <code>op2025</code></p>
-          </div> */}
         </div>
       </div>
     </div>

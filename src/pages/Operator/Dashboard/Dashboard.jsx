@@ -432,18 +432,6 @@ export default function DashboardOperator() {
         </section>
 
         <section className="below-panel">
-          <div className="quick-actions">
-            <button className="quick-btn" onClick={handleAdd}>
-              <FaPlus className="qa-icon" />
-              <div className="qa-label">Tambah Guru</div>
-            </button>
-
-            <button className="quick-btn" onClick={() => navigate('/operator/dokumen/upload')}>
-              <FaFileUpload className="qa-icon"/>
-              <div className="qa-label">Upload Dokumen</div>
-              </button>
-          </div>
-
           {/* Retirement Section */}
           <div className="retirement-section">
             <div className="retirement-panel">
@@ -493,33 +481,6 @@ export default function DashboardOperator() {
               </div>
             </div>
           </div>
-
-          {/* Activities Panel */}
-          <section className="activities-panel">
-            <div className="activities-header">
-              <h3>Aktivitas terbaru</h3>
-              <button className="link-btn" onClick={() => handleQuickAction('lihat-semua-aktivitas')}>Lihat Semua</button>
-            </div>
-
-            <div className="activities-list">
-              {[
-                { id: 1, icon: <FaExclamationCircle />, color: 'red', text: 'Pengajuan perubahan data golongan', time: '2 hari yang lalu' },
-                { id: 2, icon: <FaUserPlus />, color: 'blue', text: 'Data guru baru ditambahkan: Siti Rahayu, S.Pd', time: '4 hari yang lalu' },
-                { id: 3, icon: <FaCheckCircle />, color: 'green', text: 'Dokumen sertifikasi telah diverifikasi', time: '6 hari yang lalu' },
-                { id: 4, icon: <FaFileUpload />, color: 'green', text: 'Dokumen diunggah', time: '7 hari yang lalu' }
-              ].map(a => (
-                <div className="activity-item" key={a.id}>
-                  <div className={`activity-icon activity-icon-${a.color}`}>
-                    {a.icon}
-                  </div>
-                  <div className="activity-body">
-                    <div className="activity-text">{a.text}</div>
-                    <div className="activity-time">{a.time}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
         </section>
       </main>
 

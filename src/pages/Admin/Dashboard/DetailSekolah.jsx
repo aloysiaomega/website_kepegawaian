@@ -43,6 +43,7 @@ const DetailSekolah = () => {
           
           {/* Content */}
           <div className="ts-detail-content">
+            <div className="ts-detail-scrollable">
             {/* Nama Sekolah */}
             <div className="ts-detail-item">
               <div className="ts-detail-label">
@@ -102,6 +103,7 @@ const DetailSekolah = () => {
               </div>
               <div className="ts-detail-value">{sekolahData.npsn}</div>
             </div>
+          </div>
           </div>
         </div>
       </div>
