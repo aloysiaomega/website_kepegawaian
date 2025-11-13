@@ -9,6 +9,9 @@ export default function TambahGuru() {
   const [collapsed, setCollapsed] = useState(false);
   const [namaSekolah, setNamaSekolah] = useState("");
   const [message, setMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState(""); // 'success', 'error', 'warning'
 
   // Data dummy mata pelajaran
   const [mapelOptions] = useState([
@@ -39,6 +42,7 @@ export default function TambahGuru() {
     alamat: "",
     tanggal_bergabung: "",
     tanggal_pensiun: "",
+    jam_mengajar_perminggu: "",
     mapel_id: [],
   });
 
@@ -95,27 +99,56 @@ export default function TambahGuru() {
     });
   };
 
+  // Fungsi untuk menampilkan alert
+  const showAlertMessage = (message, type = "success") => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setShowAlert(true);
+  };
+
+  // Fungsi untuk menutup alert
+  const closeAlert = () => {
+    setShowAlert(false);
+    setAlertMessage("");
+    setAlertType("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Validasi jam mengajar
+      if (form.jam_mengajar_perminggu && (form.jam_mengajar_perminggu < 1 || form.jam_mengajar_perminggu > 40)) {
+        showAlertMessage("Jam mengajar perminggu harus antara 1-40 jam", "error");
+        return;
+      }
+
       // Simulasi API call
       console.log("Data yang dikirim:", form);
       
       // Simulasi delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      alert("Guru berhasil ditambahkan!");
-      navigate("/dataguru");
+      showAlertMessage("Guru berhasil ditambahkan!", "success");
+      
+      // Navigasi setelah alert ditutup
+      setTimeout(() => {
+        navigate("/dataguru");
+      }, 2000);
+      
     } catch (err) {
       console.error(err);
-      setMessage("Terjadi kesalahan saat menambah guru");
+      showAlertMessage("Terjadi kesalahan saat menambah guru", "error");
     }
   };
 
   const handleCancel = () => {
-    if (window.confirm("Batalkan tambah guru? Data yang sudah diisi akan hilang.")) {
-      navigate("/dataguru");
-    }
+    showAlertMessage("Batalkan tambah guru? Data yang sudah diisi akan hilang.", "warning");
+  };
+
+  // Fungsi untuk konfirmasi batal
+  const confirmCancel = () => {
+    closeAlert();
+    navigate("/dataguru");
   };
 
   const handleToggleSidebar = () => setCollapsed(prev => !prev);
@@ -315,6 +348,20 @@ export default function TambahGuru() {
                     className="readonly"
                   />
                 </div>
+
+                {/* Jumlah Jam Mengajar Perminggu - FIELD BARU */}
+                <div className="tambah-guru-field">
+                  <label>Jumlah Jam Mengajar Perminggu</label>
+                  <input
+                    type="number"
+                    name="jam_mengajar_perminggu"
+                    value={form.jam_mengajar_perminggu}
+                    onChange={handleChange}
+                    min="1"
+                    max="40"
+                    placeholder="1-40 jam"
+                  />
+                </div>
               </div>
             </div>
 
@@ -350,6 +397,59 @@ export default function TambahGuru() {
           </form>
         </div>
       </main>
+
+      {/* Alert Modal */}
+      {showAlert && (
+        <div className="tg-modal-overlay">
+          <div className="tg-modal-container">
+            <button className="tg-modal-close" onClick={closeAlert}>
+              <i className="fas fa-times"></i>
+            </button>
+            
+            <div className="tg-modal-icon">
+              {alertType === "success" && <i className="fas fa-check-circle tg-success-icon"></i>}
+              {alertType === "error" && <i className="fas fa-exclamation-circle tg-error-icon"></i>}
+              {alertType === "warning" && <i className="fas fa-exclamation-triangle tg-warning-icon"></i>}
+            </div>
+
+            <div className="tg-modal-content">
+              <h3>
+                {alertType === "success" && "Berhasil!"}
+                {alertType === "error" && "Error!"}
+                {alertType === "warning" && "Konfirmasi"}
+              </h3>
+              <p>{alertMessage}</p>
+              
+              {alertType === "warning" && (
+                <p className="tg-modal-warning">Tindakan ini tidak dapat dibatalkan</p>
+              )}
+            </div>
+
+            <div className="tg-modal-actions">
+              {alertType === "warning" ? (
+                <>
+                  <button className="tg-btn-modal-secondary" onClick={closeAlert}>
+                    Batal
+                  </button>
+                  <button className="tg-btn-modal-danger" onClick={confirmCancel}>
+                    Ya, Batalkan
+                  </button>
+                </>
+              ) : (
+                <button 
+                  className={`tg-btn-modal-primary ${
+                    alertType === "success" ? "tg-success-btn" : 
+                    alertType === "error" ? "tg-error-btn" : ""
+                  }`} 
+                  onClick={closeAlert}
+                >
+                  OK
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

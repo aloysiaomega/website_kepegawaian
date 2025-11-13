@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaSearch, FaEdit, FaTrash, FaBars, FaBook } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEdit, FaTrash, FaBars, FaBook, FaTimes, FaExclamationCircle, FaCheckCircle } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './Mapel.css';
 
@@ -56,8 +56,14 @@ export default function Mapel() {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [mapelToDelete, setMapelToDelete] = useState(null);
+  const [mapelToEdit, setMapelToEdit] = useState(null);
   const [newMapel, setNewMapel] = useState('');
+  const [editMapelName, setEditMapelName] = useState('');
+  const [modalContent, setModalContent] = useState({ title: '', message: '' });
+  
   const handleAdd = () => {navigate('/operator/data-guru/tambah-guru');};
 
   useEffect(() => {
@@ -95,6 +101,13 @@ export default function Mapel() {
       setList(prev => prev.filter(item => item.id !== mapelToDelete.id));
       setShowDeleteModal(false);
       setMapelToDelete(null);
+      
+      // Show success modal
+      setModalContent({
+        title: 'Berhasil',
+        message: `Mata pelajaran "${mapelToDelete.nama}" berhasil dihapus.`
+      });
+      setShowAlertModal(true);
     }
   };
   
@@ -107,9 +120,24 @@ export default function Mapel() {
     setCollapsed(prev => !prev);
   };
 
+  const showAlert = (title, message) => {
+    setModalContent({ title, message });
+    setShowAlertModal(true);
+  };
+
+  const closeAlertModal = () => {
+    setShowAlertModal(false);
+  };
+
   const handleAddMapel = () => {
     if (newMapel.trim() === '') {
-      alert('Nama mata pelajaran tidak boleh kosong');
+      showAlert('Data Belum Lengkap', 'Nama mata pelajaran tidak boleh kosong');
+      return;
+    }
+
+    // Check if mapel already exists
+    if (list.some(mapel => mapel.nama.toLowerCase() === newMapel.trim().toLowerCase())) {
+      showAlert('Data Sudah Ada', `Mata pelajaran "${newMapel}" sudah terdaftar.`);
       return;
     }
 
@@ -121,18 +149,55 @@ export default function Mapel() {
 
     setList(prev => [...prev, newMapelObj]);
     setNewMapel('');
-    alert(`Mata pelajaran "${newMapel}" berhasil ditambahkan`);
+    
+    // Show success modal
+    setModalContent({
+      title: 'Berhasil',
+      message: `Mata pelajaran "${newMapelObj.nama}" berhasil ditambahkan.`
+    });
+    setShowAlertModal(true);
   };
 
-  const handleEdit = (id) => {
-    const mapel = list.find(m => m.id === id);
-    const newName = prompt('Edit nama mata pelajaran:', mapel.nama);
-    
-    if (newName && newName.trim() !== '') {
-      setList(prev => prev.map(item => 
-        item.id === id ? { ...item, nama: newName.trim() } : item
-      ));
+  const handleEditClick = (mapel) => {
+    setMapelToEdit(mapel);
+    setEditMapelName(mapel.nama);
+    setShowEditModal(true);
+  };
+
+  const handleEditSave = () => {
+    if (editMapelName.trim() === '') {
+      showAlert('Data Belum Lengkap', 'Nama mata pelajaran tidak boleh kosong');
+      return;
     }
+
+    // Check if mapel already exists (excluding the current one being edited)
+    if (list.some(mapel => 
+      mapel.id !== mapelToEdit.id && 
+      mapel.nama.toLowerCase() === editMapelName.trim().toLowerCase()
+    )) {
+      showAlert('Data Sudah Ada', `Mata pelajaran "${editMapelName}" sudah terdaftar.`);
+      return;
+    }
+
+    setList(prev => prev.map(item => 
+      item.id === mapelToEdit.id ? { ...item, nama: editMapelName.trim() } : item
+    ));
+    
+    setShowEditModal(false);
+    setMapelToEdit(null);
+    
+    // Show success modal
+    setModalContent({
+      title: 'Berhasil',
+      message: `Mata pelajaran berhasil diubah menjadi "${editMapelName.trim()}".`
+    });
+    setShowAlertModal(true);
+  };
+
+  const handleEditCancel = () => {
+    setShowEditModal(false);
+    setMapelToEdit(null);
+    setEditMapelName('');
   };
 
   return (
@@ -158,7 +223,6 @@ export default function Mapel() {
           </div>
 
           <div className="mp-header-actions">
-
             <button className="mp-add-btn" onClick={handleAdd}>
               <FaPlus />
               <span>Tambah Guru</span>
@@ -200,6 +264,11 @@ export default function Mapel() {
                 value={newMapel}
                 onChange={(e) => setNewMapel(e.target.value)}
                 className="mp-mapel-input"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleAddMapel();
+                  }
+                }}
               />
               <button className="mp-add-mapel-btn" onClick={handleAddMapel}>
                 <FaPlus />
@@ -232,6 +301,7 @@ export default function Mapel() {
                       </td>
                       <td className="mp-name-cell">
                         <div className="mp-mapel-name">
+                          <FaBook className="mp-mapel-icon" />
                           {mapel.nama}
                         </div>
                       </td>
@@ -239,6 +309,14 @@ export default function Mapel() {
                         <span className="mp-guru-count">{mapel.jumlahGuru}</span>
                       </td>
                       <td className="mp-actions-cell">
+                        <button 
+                          className="mp-action-btn mp-edit-btn" 
+                          aria-label="Edit mata pelajaran"
+                          onClick={() => handleEditClick(mapel)}
+                          title="Edit Mapel"
+                        >
+                          <FaEdit />
+                        </button>
                         <button 
                           className="mp-action-btn mp-delete-btn" 
                           aria-label="Hapus mata pelajaran"
@@ -294,26 +372,87 @@ export default function Mapel() {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="mp-modal-overlay">
-          <div className="mp-modal">
-            <div className="mp-modal-header">
+          <div className="mp-modal-container mp-delete-modal">
+            <button className="mp-modal-close" onClick={handleDeleteCancel}>
+              <FaTimes />
+            </button>
+            <div className="mp-modal-icon">
+              <FaExclamationCircle />
+            </div>
+            <div className="mp-modal-content">
               <h3>Konfirmasi Hapus</h3>
-            </div>
-            <div className="mp-modal-body">
               <p>Apakah Anda yakin ingin menghapus mata pelajaran <strong>"{mapelToDelete?.nama}"</strong>?</p>
-              <p>Tindakan ini tidak dapat dibatalkan.</p>
+              <p className="mp-modal-warning">Tindakan ini tidak dapat dibatalkan.</p>
             </div>
-            <div className="mp-modal-footer">
-              <button 
-                className="mp-modal-cancel-btn"
-                onClick={handleDeleteCancel}
-              >
+            <div className="mp-modal-actions">
+              <button className="mp-btn-modal-secondary" onClick={handleDeleteCancel}>
                 Batal
               </button>
-              <button 
-                className="mp-modal-confirm-btn"
-                onClick={handleDeleteConfirm}
-              >
+              <button className="mp-btn-modal-danger" onClick={handleDeleteConfirm}>
                 Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Alert Modal */}
+      {showAlertModal && (
+        <div className="mp-modal-overlay">
+          <div className={`mp-modal-container ${modalContent.title === 'Berhasil' ? 'mp-success-modal' : 'mp-info-modal'}`}>
+            <button className="mp-modal-close" onClick={closeAlertModal}>
+              <FaTimes />
+            </button>
+            <div className="mp-modal-icon">
+              {modalContent.title === 'Berhasil' ? <FaCheckCircle /> : <FaExclamationCircle />}
+            </div>
+            <div className="mp-modal-content">
+              <h3>{modalContent.title}</h3>
+              <p>{modalContent.message}</p>
+            </div>
+            <div className="mp-modal-actions">
+              <button className="mp-btn-modal-primary" onClick={closeAlertModal}>
+                Oke
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {showEditModal && (
+        <div className="mp-modal-overlay">
+          <div className="mp-modal-container mp-edit-modal">
+            <button className="mp-modal-close" onClick={handleEditCancel}>
+              <FaTimes />
+            </button>
+            <div className="mp-modal-icon">
+              <FaEdit />
+            </div>
+            <div className="mp-modal-content">
+              <h3>Edit Mata Pelajaran</h3>
+              <div className="mp-edit-form">
+                <label>Nama Mata Pelajaran</label>
+                <input
+                  type="text"
+                  value={editMapelName}
+                  onChange={(e) => setEditMapelName(e.target.value)}
+                  placeholder="Masukkan nama mata pelajaran"
+                  className="mp-edit-input"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleEditSave();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="mp-modal-actions">
+              <button className="mp-btn-modal-secondary" onClick={handleEditCancel}>
+                Batal
+              </button>
+              <button className="mp-btn-modal-primary" onClick={handleEditSave}>
+                Simpan
               </button>
             </div>
           </div>
