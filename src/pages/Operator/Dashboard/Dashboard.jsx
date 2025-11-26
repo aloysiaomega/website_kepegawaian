@@ -9,33 +9,17 @@ import {
   FaPlus,
   FaPrint,
   FaDownload,
-  FaFileUpload,
-  FaFileAlt,
-  FaUserPlus,
-  FaCheckCircle,
   FaTimes,
   FaExclamationTriangle,
   FaEye,
-  FaTrash,
-  FaUser,
-  FaCalendar,
-  FaMapMarkerAlt,
-  FaVenusMars,
-  FaEnvelope,
-  FaPhone,
-  FaGraduationCap,
-  FaSchool,
-  FaChalkboardTeacher,
-  FaIdCard,
-  FaBriefcase,
-  FaHistory
+  FaTrash
 } from 'react-icons/fa'
 import './Dashboard.css'
 
 const SUMMARY = {
   totalGuru: { label: 'Total Guru', value: '42 Guru', meta: '25 PNS, 10 P3K, 7 Honorer' },
   mapel: { label: 'Total Mapel', value: '12 Mapel', meta: '' },
-  akanPensiun: { label: 'Guru Akan Pensiun', value: '3 Guru', meta: '2 PNS, 1 P3K' }
+  akanPensiun: { label: 'Guru Akan Pensiun (3 Tahun)', value: '3 Guru', meta: '2 PNS, 1 P3K' }
 }
 
 const TEACHERS = [
@@ -276,20 +260,6 @@ export default function DashboardOperator() {
     }
   }
 
-  // Fungsi untuk quick actions
-  const handleQuickAction = (action) => {
-    switch(action) {
-      case 'lihat-semua-pensiun':
-        showAlert('Guru Akan Pensiun', 'Fitur lihat semua guru akan pensiun sedang dalam pengembangan.')
-        break
-      case 'lihat-semua-aktivitas':
-        showAlert('Aktivitas', 'Fitur lihat semua aktivitas sedang dalam pengembangan.')
-        break
-      default:
-        showAlert('Info', 'Fitur sedang dalam pengembangan.')
-    }
-  }
-
   // Komponen Modal Detail Guru
   const DetailGuruModal = (id) => {
     navigate('/operator/data-guru/view/${id}');
@@ -437,7 +407,6 @@ export default function DashboardOperator() {
             <div className="retirement-panel">
               <div className="retirement-header">
                 <h3>Guru Akan Pensiun (3 Tahun)</h3>
-                <button className="link-btn" onClick={() => handleQuickAction('lihat-semua-pensiun')}>Lihat Semua</button>
               </div>
 
               <div className="table-wrap">
@@ -527,7 +496,7 @@ export default function DashboardOperator() {
                 Batal
               </button>
               <button className="btn-modal-danger" onClick={confirmDelete}>
-                Ya, Proses Pensiun
+                Ya, Hapus
               </button>
             </div>
           </div>

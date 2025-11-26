@@ -12,11 +12,6 @@ import TambahGuru from './pages/Operator/DataGuru/TambahGuru.jsx';
 import EditGuru from './pages/Operator/DataGuru/EditGuru.jsx';
 import ViewGuru from './pages/Operator/DataGuru/ViewGuru.jsx';
 import Mapel from './pages/Operator/Mapel/Mapel.jsx';
-import Dokumen from './pages/Operator/Dokumen/DokumenDigital.jsx';
-import UploadDokumen from './pages/Operator/Dokumen/Tambah.jsx';
-import Usulan from './pages/Operator/PerubahanData/UsulPerubahanData.jsx';
-import Pelaporan from './pages/Operator/PelaporanSekolah/Pelaporan.jsx';
-import GantiPassword from './pages/Operator/GantiPassword/GantiPassword.jsx';
 
 // Admin Cabdin Components
 import DashboardA from './pages/Admin/Dashboard/DashboardA.jsx';
@@ -24,8 +19,6 @@ import TambahSekolah from './pages/Admin/Dashboard/TambahSekolah.jsx';
 import DetailSekolah from './pages/Admin/Dashboard/DetailSekolah.jsx';
 import DataGuruAdmin from './pages/Admin/DataGuru/DataGuru.jsx';
 import DetailGuru from './pages/Admin/DataGuru/DetailGuru.jsx';
-import DokumenDigital from './pages/Admin/DokumenDigital/DokumenDigital.jsx'
-import DetailDokumen from './pages/Admin/DokumenDigital/DetailDokumen.jsx';
 import ManajemenPengguna from './pages/Admin/ManajemenPengguna/ManajemenPengguna.jsx';
 import TambahPengguna from './pages/Admin/ManajemenPengguna/TambahPengguna.jsx';
 import EditPengguna from './pages/Admin/ManajemenPengguna/EditPengguna.jsx';
@@ -66,10 +59,6 @@ export default function App() {
         <Route path="/operator/data-guru/view/:id" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><ViewGuru /></ProtectedRoute>}/>
         <Route path="/operator/data-guru/edit/:id" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><EditGuru /></ProtectedRoute>} />
         <Route path="/operator/mata-pelajaran" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Mapel /></ProtectedRoute>} />
-        <Route path="/operator/dokumen" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Dokumen /></ProtectedRoute>}/>
-        <Route path="/operator/dokumen/upload" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><UploadDokumen /></ProtectedRoute>}/>
-        <Route path="/operator/usulan" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Usulan /></ProtectedRoute>}/>
-        <Route path="/operator/pelaporan" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR]}><Pelaporan /></ProtectedRoute>}/>
 
         {/* Admin Cabdin Routes */}
         <Route path="/admin-cabdin/dashboard" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DashboardA /></ProtectedRoute>}/>
@@ -77,20 +66,14 @@ export default function App() {
         <Route path="/admin-cabdin/detail-sekolah/:id" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DetailSekolah /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/data-guru" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DataGuruAdmin /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/data-guru/detail/:id" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DetailGuru /></ProtectedRoute>}/>
-        <Route path="/admin-cabdin/dokumen-digital" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DokumenDigital /></ProtectedRoute>}/>
-        <Route path="/admin-cabdin/dokumen-digital/detail/:id" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><DetailDokumen /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/manajemen-pengguna" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><ManajemenPengguna /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/manajemen-pengguna/tambah-pengguna" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><TambahPengguna /></ProtectedRoute>}/>
         <Route path="/admin-cabdin/manajemen-pengguna/edit/:id" element={<ProtectedRoute allowedRoles={[ROLES.ADMIN_CABDIN]}><EditPengguna /></ProtectedRoute>}/>
-
-        {/* Shared Routes (Available for both roles) */}
-        <Route  path="/ganti-password" element={<ProtectedRoute allowedRoles={[ROLES.OPERATOR, ROLES.ADMIN_CABDIN]}><GantiPassword /></ProtectedRoute>}/>
 
         {/* Redirect routes for better UX */}
         <Route path="/dashboard" element={<Navigate to="/operator/dashboard" replace />} />
         <Route path="/dataguru" element={<Navigate to="/operator/data-guru" replace />} />
         <Route path="/data-guru" element={<Navigate to="/operator/data-guru" replace />} />
-        <Route path="/pelaporan-sekolah" element={<Navigate to="/operator/pelaporan" replace />} />
 
         {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/" replace />} />

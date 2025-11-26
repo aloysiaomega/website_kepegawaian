@@ -59,11 +59,6 @@ export default function SidebarAdminCabdin({ user, collapsed, onToggle }) {
               <span className="menu-admin-label">Data Guru</span>
             </NavLink>
 
-            <NavLink to="/admin-cabdin/dokumen-digital" className="menu-admin-item">
-              <FaFileAlt className="menu-admin-icon" />
-              <span className="menu-admin-label">Dokumen Digital</span>
-            </NavLink>
-
             <NavLink to="/admin-cabdin/manajemen-pengguna" className="menu-admin-item">
               <FaUsers className="menu-admin-icon" />
               <span className="menu-admin-label">Manajemen Pengguna</span>

@@ -60,11 +60,6 @@ export default function Sidebar({ user, collapsed, onToggle }) {
               <FaBook className="menu-icon" />
               <span className="menu-label">Mata Pelajaran</span>
             </NavLink>
-
-            <NavLink to="/operator/dokumen" className="menu-item">
-              <FaFileAlt className="menu-icon" />
-              <span className="menu-label">Dokumen Digital</span>
-            </NavLink>
           </nav>
         </div>
 

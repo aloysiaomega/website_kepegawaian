@@ -10,7 +10,7 @@ export default function DataGuru() {
   
   const initialData = [
     { id: 1, nama: 'Ahmad Darmawan, S.Pd', nip: '198512122019031005', mapel: ['Matematika'], status: ['PNS'], tglPensiun: '15/12/2048' },
-    { id: 2, nama: 'Budi Santosa, S.Pd', nip: '197911292005011003', mapel: ['Bahasa Indonesia'], status: ['P3K Paruh Waktu'], tglPensiun: '29/11/2039' },
+    { id: 2, nama: 'Budi Santosa, S.Pd', nip: '197911292005011003', mapel: ['Bahasa Indonesia', 'Bhs Ingg', 'popopopopo'], status: ['P3K Paruh Waktu'], tglPensiun: '29/11/2039' },
     { id: 3, nama: 'Eko Raharjo, S.Pd', nip: '198004152006041002', mapel: ['Bahasa Inggris'], status: ['P3K'], tglPensiun: '15/04/2042' },
     { id: 4, nama: 'Siti Rahayu, S.Pd', nip: '198208102008022001', mapel: ['Matematika'], status: ['P3K'], tglPensiun: '10/08/2045' },
     { id: 5, nama: 'Dewi Kusuma, S.Pd', nip: '197703151997032002', mapel: ['Bahasa Indonesia'], status: ['PNS'], tglPensiun: '15/03/2035' }
@@ -173,9 +173,6 @@ export default function DataGuru() {
                     onChange={(e) => setQuery(e.target.value)}
                     aria-label="Cari Guru"
                   />
-                  <button className="dg-search-btn" aria-label="Search">
-                    <FaSearch />
-                  </button>
                 </div>
               </div>
             </div>

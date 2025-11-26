@@ -332,32 +332,6 @@ export default function DashboardAdminCabdin() {
               </div>
             </div>
 
-            {/* Aksi Cepat Section */}
-            <div className="acd-quick-actions">
-              <h3 className="acd-bottom-section-title">Aksi Cepat</h3>
-              <div className="acd-quick-actions-grid">
-                <div className="acd-quick-action-card">
-                  <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
-                    <FaSchool />
-                  </div>
-                  <div className="acd-quick-action-content">
-                    <h4>Data Sekolah</h4>
-                    <p>Kelola Sekolah</p>
-                  </div>
-                </div>
-                
-                <div className="acd-quick-action-card" onClick={handleDataGuru}>
-                  <div className="acd-quick-action-icon" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
-                    <FaUsers />
-                  </div>
-                  <div className="acd-quick-action-content" style={{ cursor: 'pointer' }}>
-                    <h4>Data Guru</h4>
-                    <p>Seluruh Wilayah</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Statistik Wilayah Section */}
             <div className="acd-region-stats">
               <h3 className="acd-bottom-section-title">Statistik Wilayah</h3>
