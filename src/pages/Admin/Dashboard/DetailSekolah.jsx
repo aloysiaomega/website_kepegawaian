@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './DetailSekolah.css';
+import { useNavigate } from "react-router-dom";
 import SidebarAdminCabdin from '../Sidebar/SidebarA';
 
 const DetailSekolah = () => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
   const handleToggleSidebar = () => {
@@ -33,6 +35,10 @@ const DetailSekolah = () => {
           {/* Header */}
           <div className="ts-detail-header">
             <div className="ts-detail-title-section">
+              <button className="tambah-pengguna-back-btn" onClick={() => navigate("/admin-cabdin/dashboard")}>
+              <i className="fas fa-arrow-left"></i>
+              Kembali
+            </button>
               <div className="ts-detail-title-icon">🏫</div>
               <div>
                 <h1>Detail Sekolah</h1>
