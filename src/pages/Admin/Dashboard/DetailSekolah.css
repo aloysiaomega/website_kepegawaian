@@ -358,3 +358,99 @@
     scrollbar-color: #cbd5e1 #f1f5f9;
   }
 }
+
+/* Status Radio Group */
+.ts-status-radio-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ts-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 12px 16px;
+  border: 2px solid var(--ts-border-color);
+  border-radius: var(--ts-border-radius);
+  transition: var(--ts-transition);
+  background: var(--ts-bg-color);
+  min-width: 150px;
+}
+
+.ts-radio-option:hover {
+  border-color: var(--ts-primary-light);
+  transform: translateY(-1px);
+}
+
+.ts-radio-option input[type="radio"] {
+  display: none;
+}
+
+.ts-radio-checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ts-border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--ts-transition);
+}
+
+.ts-radio-option input[type="radio"]:checked + .ts-radio-checkmark {
+  border-color: var(--ts-primary-color);
+  background: var(--ts-primary-color);
+}
+
+.ts-radio-option input[type="radio"]:checked + .ts-radio-checkmark::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+.ts-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--ts-text-color);
+}
+
+.ts-status-icon {
+  font-size: 16px;
+}
+
+.ts-status-icon.aktif {
+  color: #10b981;
+}
+
+.ts-status-icon.nonaktif {
+  color: #ef4444;
+}
+
+/* Radio option active state */
+.ts-radio-option input[type="radio"]:checked ~ .ts-radio-label {
+  font-weight: 600;
+}
+
+.ts-radio-option input[type="radio"]:checked {
+  border-color: var(--ts-primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Responsive radio group */
+@media (max-width: 768px) {
+  .ts-status-radio-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .ts-radio-option {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
